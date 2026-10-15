@@ -1,0 +1,23 @@
+{
+  "mem_pss_avg_bytes": 4918181900.0,
+  "mem_pss_max_bytes": 5082279900.0,
+  "reduction_factor": 94.36877075598983,
+  "throughput_bytes_per_sec_per_core": 3939988.210526316,
+  "expected_output_size_bytes": 3521000138610.694,
+  "expected_resources_core_seconds": 84333362.73053849,
+  "_raw": {
+    "input_size": 2545232384,
+    "output_size": 27381814,
+    "derived_output_size": 26971130,
+    "wall_time": 323,
+    "cpu_time": 528,
+    "cpu_cores": 2,
+    "dataset_size": null,
+    "dataset_size_with_parents": 332272454912361,
+    "dataset_size_without_parents": 332272454912361,
+    "mem_pss": 4918181900.0,
+    "mem_pss_max": 5082279900.0,
+    "package_tag": "VO_ALICE@O2Physics::daily-20261008-0000-1",
+    "dataset_name": "LHC22o_pass7_minBias"
+  }
+}

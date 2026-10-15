@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+
+# download_test_output.py dumps a lot of reproducible/heavy artifacts per
+# test into output/<name>/ -- keep only the curated, human-useful bits
+# (cuts.md, SOURCE.json, performance.json, configuration.json) tracked.
+output/*/AnalysisResults.root
+output/*/AO2D.root
+output/*/*.log
+output/*/dpl-config.json
+output/*/full_config.json
+output/*/OutputDirector.json
+output/*/status.json
+output/*/train_meta.json
+output/*/test_meta.json

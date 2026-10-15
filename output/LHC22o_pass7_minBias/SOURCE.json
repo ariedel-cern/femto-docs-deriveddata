@@ -1,0 +1,16 @@
+{
+  "source_url": "778977",
+  "resolved_id": 778977,
+  "resolved_kind": "train",
+  "resolved_directory": "https://alimonitor.cern.ch/train-workdir/tests/0077/00778977/",
+  "downloaded_files": [
+    "AnalysisResults.root",
+    "configuration.json",
+    "dpl-config.json",
+    "full_config.json",
+    "OutputDirector.json",
+    "status.json",
+    "stdout.log",
+    "stderr.log"
+  ]
+}
