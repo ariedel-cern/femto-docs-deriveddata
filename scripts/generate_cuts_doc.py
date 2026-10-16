@@ -79,6 +79,37 @@ def bin_kind(b):
     return "neutral"
 
 
+def humanize_comment(raw):
+    """Translate known raw 'key = value; ...' comments -- the "gates that
+    don't show up as bits" the userguide describes -- into a short, plain
+    note. Unrecognized keys are passed through as-is."""
+    if not raw or raw.upper() == "X":
+        return ""
+
+    parts = {}
+    for p in raw.split(";"):
+        if "=" in p:
+            key, val = p.split("=", 1)
+            parts[key.strip()] = val.strip()
+
+    notes = []
+    for key in [k for k in parts if k.lower().startswith("minmomtof")]:
+        notes.append(f"TOF required above {float(parts.pop(key)):g} GeV/c")
+
+    if "requireTof" in parts and "keepTracksWithoutTof" in parts:
+        require_tof = parts.pop("requireTof")
+        keep_without_tof = parts.pop("keepTracksWithoutTof")
+        if require_tof == "1":
+            notes.append("TOF required")
+        elif keep_without_tof == "1":
+            notes.append("passes if daughter has no TOF; else cut uses corrected TOF time")
+        else:
+            notes.append("rejected if daughter has no TOF; cut uses corrected TOF time when present")
+
+    notes.extend(f"{k} = {v}" for k, v in parts.items())
+    return "; ".join(notes)
+
+
 def read_bins(hist):
     """Parse all bins of a histogram, dropping the two trailing
     'All analyzed'/'All passed' bins present on every histogram."""
@@ -140,8 +171,7 @@ def render_selection_table(bins):
         for b in sorted(group, key=sort_key):
             pos = b.get("BitPosition", "X")
             bit_label = "always applied" if pos.upper() == "X" else pos
-            comment = b.get("Comment", "")
-            comment = "" if comment.upper() == "X" else comment
+            comment = humanize_comment(b.get("Comment", ""))
             lines.append(f"| {md_cell(sel_name)} | {bit_label} | {bin_kind(b)} | {md_cell(b.get('Value', ''))} | {md_cell(comment)} |")
     return "\n".join(lines)
 

@@ -1,8 +1,8 @@
 # CF_LHC25_pass1_minBias_Femto_GP
 
-**AnalysisResults.root for cutculator.py:** _pending -- added once the production train completes_
+**AnalysisResults.root for cutculator.py:** [https://alimonitor.cern.ch/catalogue/?path=/alice/cern.ch/user/a/alihyperloop/jobs/0624/hy_6246403/AOD#/alice/cern.ch/user/a/alihyperloop/jobs/0624/hy_6246403/AOD/001/AnalysisResults.root](https://alimonitor.cern.ch/catalogue/?path=/alice/cern.ch/user/a/alihyperloop/jobs/0624/hy_6246403/AOD#/alice/cern.ch/user/a/alihyperloop/jobs/0624/hy_6246403/AOD/001/AnalysisResults.root)
 
-**Hyperloop dataset:** _pending -- added once the derived data has been produced_
+**Hyperloop dataset:** [https://alimonitor.cern.ch/hyperloop/view-dataset/2667](https://alimonitor.cern.ch/hyperloop/view-dataset/2667)
 
 | | |
 | --- | --- |
@@ -120,23 +120,23 @@
 | TPC+ITS Triton PID | 39 | optional | 3.500000 |  |
 | TPC+ITS Triton PID | 40 | optional | 3.000000 |  |
 | TPC+ITS Triton PID | 41 | optional | 2.500000 |  |
-| TPC+TOF Pion PID | 42 | optional | 3.500000 | minMomTofPion = 0.500000 |
-| TPC+TOF Pion PID | 43 | optional | 3.000000 | minMomTofPion = 0.500000 |
-| TPC+TOF Pion PID | 44 | optional | 2.500000 | minMomTofPion = 0.500000 |
-| TPC+TOF Kaon PID | 45 | optional | 3.500000 | minMomTofKaon = 0.400000 |
-| TPC+TOF Kaon PID | 46 | optional | 3.000000 | minMomTofKaon = 0.400000 |
-| TPC+TOF Kaon PID | 47 | optional | 2.500000 | minMomTofKaon = 0.400000 |
-| TPC+TOF Proton PID | 48 | optional | 3.500000 | minMomTofProton = 0.750000 |
-| TPC+TOF Proton PID | 49 | optional | 3.000000 | minMomTofProton = 0.750000 |
-| TPC+TOF Proton PID | 50 | optional | 2.500000 | minMomTofProton = 0.750000 |
-| TPC+TOF Deuteron PID | 51 | optional | 3.500000 | minMomTofDeuteron = 1.200000 |
-| TPC+TOF Deuteron PID | 52 | optional | 3.000000 | minMomTofDeuteron = 1.200000 |
-| TPC+TOF Deuteron PID | 53 | optional | 2.500000 | minMomTofDeuteron = 1.200000 |
-| TPC+TOF Triton PID | 54 | optional | 3.000000 | minMomTofTriton = 2.000000 |
-| TPC+TOF Triton PID | 55 | optional | 2.500000 | minMomTofTriton = 2.000000 |
-| TPC+TOF He3 PID | 56 | optional | 3.500000 | minMomTofHelium = 99.000000 |
-| TPC+TOF He3 PID | 57 | optional | 3.000000 | minMomTofHelium = 99.000000 |
-| TPC+TOF He3 PID | 58 | optional | 2.500000 | minMomTofHelium = 99.000000 |
+| TPC+TOF Pion PID | 42 | optional | 3.500000 | TOF required above 0.5 GeV/c |
+| TPC+TOF Pion PID | 43 | optional | 3.000000 | TOF required above 0.5 GeV/c |
+| TPC+TOF Pion PID | 44 | optional | 2.500000 | TOF required above 0.5 GeV/c |
+| TPC+TOF Kaon PID | 45 | optional | 3.500000 | TOF required above 0.4 GeV/c |
+| TPC+TOF Kaon PID | 46 | optional | 3.000000 | TOF required above 0.4 GeV/c |
+| TPC+TOF Kaon PID | 47 | optional | 2.500000 | TOF required above 0.4 GeV/c |
+| TPC+TOF Proton PID | 48 | optional | 3.500000 | TOF required above 0.75 GeV/c |
+| TPC+TOF Proton PID | 49 | optional | 3.000000 | TOF required above 0.75 GeV/c |
+| TPC+TOF Proton PID | 50 | optional | 2.500000 | TOF required above 0.75 GeV/c |
+| TPC+TOF Deuteron PID | 51 | optional | 3.500000 | TOF required above 1.2 GeV/c |
+| TPC+TOF Deuteron PID | 52 | optional | 3.000000 | TOF required above 1.2 GeV/c |
+| TPC+TOF Deuteron PID | 53 | optional | 2.500000 | TOF required above 1.2 GeV/c |
+| TPC+TOF Triton PID | 54 | optional | 3.000000 | TOF required above 2 GeV/c |
+| TPC+TOF Triton PID | 55 | optional | 2.500000 | TOF required above 2 GeV/c |
+| TPC+TOF He3 PID | 56 | optional | 3.500000 | TOF required above 99 GeV/c |
+| TPC+TOF He3 PID | 57 | optional | 3.000000 | TOF required above 99 GeV/c |
+| TPC+TOF He3 PID | 58 | optional | 2.500000 | TOF required above 99 GeV/c |
 
 ## K0short
 
@@ -189,9 +189,9 @@
 | TPC Pion PID for negative daughter | always applied | minimal | 5.000000 |  |
 | TPC Pion PID for negative daughter | 14 | minimal | 4.000000 |  |
 | TPC Pion PID for negative daughter | 15 | minimal | 3.000000 |  |
-| TOF Pion PID for negative daughter | 16 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| TOF Pion PID for negative daughter | 17 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| TOF Pion PID for negative daughter | 18 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| TOF Pion PID for negative daughter | 16 | neutral | 5.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| TOF Pion PID for negative daughter | 17 | neutral | 4.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| TOF Pion PID for negative daughter | 18 | neutral | 3.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
 
 ## Lambda
 
@@ -244,12 +244,12 @@
 | TPC Pion PID for negative daughter | always applied | minimal | 5.000000 |  |
 | TPC Pion PID for negative daughter | 14 | minimal | 4.000000 |  |
 | TPC Pion PID for negative daughter | 15 | minimal | 3.000000 |  |
-| TOF Proton PID for positive daughter | 16 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| TOF Proton PID for positive daughter | 17 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| TOF Proton PID for positive daughter | 18 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| TOF Pion PID for negative daughter | 19 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| TOF Pion PID for negative daughter | 20 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| TOF Pion PID for negative daughter | 21 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| TOF Proton PID for positive daughter | 16 | neutral | 5.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| TOF Proton PID for positive daughter | 17 | neutral | 4.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| TOF Proton PID for positive daughter | 18 | neutral | 3.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| TOF Pion PID for negative daughter | 19 | neutral | 5.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| TOF Pion PID for negative daughter | 20 | neutral | 4.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| TOF Pion PID for negative daughter | 21 | neutral | 3.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
 
 ## Sigma
 
@@ -328,9 +328,9 @@
 | mothDcaPvMax | 2 | minimal | 0.020000 |  |
 | chaDauTpcProton | always applied | minimal | 5.000000 |  |
 | chaDauTpcProton | 3 | minimal | 4.000000 |  |
-| chaDauTofProton | always applied | neutral | 4.500000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| chaDauTofProton | 4 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| chaDauTofProton | 5 | neutral | 3.500000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| chaDauTofProton | always applied | neutral | 4.500000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| chaDauTofProton | 4 | neutral | 4.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| chaDauTofProton | 5 | neutral | 3.500000 | passes if daughter has no TOF; else cut uses corrected TOF time |
 | alphaAPMin | always applied | minimal | 0.000000 |  |
 | alphaAPMax | always applied | minimal | 1.000000 |  |
 | qtAPMin | always applied | minimal | 0.100000 |  |
@@ -405,21 +405,21 @@
 | Bachelor TPC Pion PID | always applied | minimal | 5.000000 |  |
 | Bachelor TPC Pion PID | 17 | minimal | 4.000000 |  |
 | Bachelor TPC Pion PID | 18 | minimal | 3.000000 |  |
-| Bachelor TOF Pion PID | 19 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| Bachelor TOF Pion PID | 20 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| Bachelor TOF Pion PID | 21 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Bachelor TOF Pion PID | 19 | neutral | 5.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| Bachelor TOF Pion PID | 20 | neutral | 4.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| Bachelor TOF Pion PID | 21 | neutral | 3.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
 | Positive Daughter TPC PID | always applied | minimal | 5.000000 |  |
 | Positive Daughter TPC PID | 22 | minimal | 4.000000 |  |
 | Positive Daughter TPC PID | 23 | minimal | 3.000000 |  |
 | Negative Daughter TPC PID | always applied | minimal | 5.000000 |  |
 | Negative Daughter TPC PID | 24 | minimal | 4.000000 |  |
 | Negative Daughter TPC PID | 25 | minimal | 3.000000 |  |
-| Positive Daughter TOF PID | 26 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| Positive Daughter TOF PID | 27 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| Positive Daughter TOF PID | 28 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| Negative Daughter TOF PID | 29 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| Negative Daughter TOF PID | 30 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| Negative Daughter TOF PID | 31 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Positive Daughter TOF PID | 26 | neutral | 5.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| Positive Daughter TOF PID | 27 | neutral | 4.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| Positive Daughter TOF PID | 28 | neutral | 3.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| Negative Daughter TOF PID | 29 | neutral | 5.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| Negative Daughter TOF PID | 30 | neutral | 4.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| Negative Daughter TOF PID | 31 | neutral | 3.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
 
 ## Omega
 
@@ -478,18 +478,18 @@
 | Bachelor TPC Kaon PID | always applied | minimal | 5.000000 |  |
 | Bachelor TPC Kaon PID | 17 | minimal | 4.000000 |  |
 | Bachelor TPC Kaon PID | 18 | minimal | 3.000000 |  |
-| Bachelor TOF Kaon PID | 19 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| Bachelor TOF Kaon PID | 20 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| Bachelor TOF Kaon PID | 21 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Bachelor TOF Kaon PID | 19 | neutral | 5.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| Bachelor TOF Kaon PID | 20 | neutral | 4.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| Bachelor TOF Kaon PID | 21 | neutral | 3.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
 | Positive Daughter TPC PID | always applied | minimal | 5.000000 |  |
 | Positive Daughter TPC PID | 22 | minimal | 4.000000 |  |
 | Positive Daughter TPC PID | 23 | minimal | 3.000000 |  |
 | Negative Daughter TPC PID | always applied | minimal | 5.000000 |  |
 | Negative Daughter TPC PID | 24 | minimal | 4.000000 |  |
 | Negative Daughter TPC PID | 25 | minimal | 3.000000 |  |
-| Positive Daughter TOF PID | 26 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| Positive Daughter TOF PID | 27 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| Positive Daughter TOF PID | 28 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Positive Daughter TOF PID | 26 | neutral | 5.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| Positive Daughter TOF PID | 27 | neutral | 4.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
+| Positive Daughter TOF PID | 28 | neutral | 3.000000 | passes if daughter has no TOF; else cut uses corrected TOF time |
 
 ## Photon
 
