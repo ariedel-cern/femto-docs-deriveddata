@@ -8,7 +8,7 @@
 | --- | --- |
 | Software tag | VO_ALICE@O2Physics::daily-20261008-0000-1 |
 | Test train | [777250](https://alimonitor.cern.ch/hyperloop/train-run/777250/general) |
-| Production train | _pending -- added once the production train is composed_ |
+| Production train | [782224](https://alimonitor.cern.ch/hyperloop/train-run/782224/general) |
 
 ## Collision
 
