@@ -18,13 +18,17 @@ Both the API and the directory require your personal grid certificate as a
 TLS client cert -- the same usercert.pem/userkey.pem used for alien://
 access.
 
-Config file fields:
+Config file fields (only train_id is used here; the rest are read by
+generate_cuts_doc.py):
     comment              free text, for humans reading the config
     train_id             the Hyperloop train number (required)
     output_download_link link to the final merged production output, filled
                           in by hand once the real (non-test) train has run;
                           leave null/empty until then -- generate_cuts_doc.py
                           renders a placeholder in its place
+    species_comments     optional {species name: comment} map, rendered
+                          under that species' heading; empty or missing
+                          entries are skipped
 
 Example:
 

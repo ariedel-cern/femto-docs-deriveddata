@@ -1,5 +1,16 @@
 {
   "comment": "Femto producer cuts for the GP derived-data train, wagon AAA_FemtoProducer_GP_Derived_22_24_v3",
   "train_id": 778977,
-  "output_download_link": null
+  "output_download_link": null,
+  "species_comments": {
+    "Track": "Only the minimal cuts matter here; PID bits are left loose on purpose.",
+    "K0short": "",
+    "Lambda": "",
+    "Sigma": "",
+    "SigmaPlus": "",
+    "Xi": "",
+    "Omega": "",
+    "Photon": "",
+    "Collision": ""
+  }
 }

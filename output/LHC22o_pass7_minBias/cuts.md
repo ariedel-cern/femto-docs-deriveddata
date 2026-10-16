@@ -62,6 +62,8 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 
 ## Track
 
+> Only the minimal cuts matter here; PID bits are left loose on purpose.
+
 ### Prefilters
 
 | Filter | Value |

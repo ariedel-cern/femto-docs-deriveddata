@@ -13,9 +13,11 @@ full menu a downstream analysis can choose from -- grouped by species and
 selection. Bit positions are omitted from the table (selections are listed
 in ascending bit order, so a downstream user can number them back in).
 
-Takes the same JSON config file as download_test_output.py, so that a
-"comment" and the final "output_download_link" (added by hand once the
-real production train has finished) make it into the doc.
+Takes the same JSON config file as download_test_output.py, so that the
+general "comment", the final "output_download_link" (added by hand once
+the real production train has finished), and any per-species comments
+("species_comments": {species name: comment}) make it into the doc. A
+comment that is empty or whose key is missing is simply skipped.
 
 Example:
 
@@ -137,8 +139,11 @@ def humanize(species_name):
     return re.sub(r"(?<=[a-z])(?=[A-Z])", " ", species_name)
 
 
-def render_species(name, hists_by_kind, tdir):
+def render_species(name, hists_by_kind, tdir, comment=None):
     parts = [f"## {humanize(name)}"]
+
+    if comment:
+        parts.append(f"> {comment}")
 
     if "Filters" in hists_by_kind:
         bins = read_bins(tdir.Get(hists_by_kind["Filters"]))
@@ -238,10 +243,12 @@ def main():
     if not species:
         raise SystemExit(f"No h<Species>Filters/h<Species>Selection histograms found in '{args.dir}'")
 
+    species_comments = doc_config.get("species_comments") or {}
+
     doc = [render_header(args.outdir, doc_config)]
     names = ordered_species_names(species)
     for name in names:
-        doc.append(render_species(name, species[name], tdir))
+        doc.append(render_species(name, species[name], tdir, species_comments.get(name)))
 
     output_path = args.output or os.path.join(args.outdir, "cuts.md")
     with open(output_path, "w") as out:
