@@ -5,17 +5,28 @@ on:
     branches: [main]
     paths:
       - output/LHC22o_pass7_minBias/cuts.md
+      - output/LHC24_pass1_minBias/cuts.md
+      - output/LHC25_pass1_minBias/cuts.md
 
 jobs:
   sync-gist:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - path: output/LHC22o_pass7_minBias/cuts.md
+            gist_id: 56975617144260b07692a8adcf3df2c1
+          - path: output/LHC24_pass1_minBias/cuts.md
+            gist_id: 4c7a7fda5be717e3e509b6cd22b40497
+          - path: output/LHC25_pass1_minBias/cuts.md
+            gist_id: 290e53c15fce3c78a6d3442d53ffc241
     steps:
       - uses: actions/checkout@v4
 
       - name: Push cuts.md content to gist
         env:
           GH_TOKEN: ${{ secrets.GIST_TOKEN }}
-          GIST_ID: 56975617144260b07692a8adcf3df2c1
+          GIST_ID: ${{ matrix.gist_id }}
         run: |
           gh api -X PATCH "gists/${GIST_ID}" \
-            -f "files[cuts.md][content]=$(cat output/LHC22o_pass7_minBias/cuts.md)"
+            -f "files[cuts.md][content]=$(cat ${{ matrix.path }})"
