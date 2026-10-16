@@ -18,7 +18,8 @@ small JSON config in `configs/` (see `configs/LHC22o_pass7_minBias.json`):
 {
   "title": "doc title (H1); falls back to \"Configured cuts\"",
   "comment": "free text, for humans reading the config",
-  "train_id": 778977,
+  "test_train_id": 778977,
+  "production_train_id": null,
   "cutculator_input_link": null,
   "hyperloop_dataset_link": null,
   "species_comments": {
@@ -27,14 +28,22 @@ small JSON config in `configs/` (see `configs/LHC22o_pass7_minBias.json`):
 }
 ```
 
-`cutculator_input_link` points at an `AnalysisResults.root` from the real
-(non-test) production train, for analysers to feed into `cutculator.py`
-themselves. `hyperloop_dataset_link` points at the Hyperloop dataset for
-the derived data. Both are filled in by hand once available -- the first
-once the real train has run, the second once operators hand over the
-dataset link after the derived data has been produced -- and until then
-stay `null`, showing a placeholder. `comment` and any entry in
-`species_comments` are skipped entirely in the doc if empty or missing.
+A femto cuts run typically has two trains, each with its own permanent
+Hyperloop overview page: `test_train_id` is run on a small dataset first
+(this is what `download_test_output.py` actually pulls `AnalysisResults.root`
+from), and once that looks right, `production_train_id` is the train
+composed on the full dataset (it gets its own test too, but the doc only
+needs a link to it, not its output) -- filled in by hand once it exists.
+
+`cutculator_input_link` points at an `AnalysisResults.root` from the
+production train, for analysers to feed into `cutculator.py` themselves.
+`hyperloop_dataset_link` points at the Hyperloop dataset for the derived
+data. Both are filled in by hand once available -- the first once the
+production train has run, the second once operators hand over the dataset
+link after the derived data has been produced -- and until then stay
+`null`, showing a placeholder. `comment`, `production_train_id`, and any
+entry in `species_comments` are skipped (or shown as a placeholder, for the
+two links) if empty or missing.
 
 ```bash
 # 1. resolves the train's "full" test itself, pulls the performance overview

@@ -15,14 +15,16 @@ always-enforced floor (no bit) can be told apart from their selectable
 tightenings (bit N).
 
 Takes the same JSON config file as download_test_output.py, so that the
-"title", general "comment", the "cutculator_input_link" (a link to an
-AnalysisResults.root from the real production train, for analysers to feed
-into cutculator.py themselves), the "hyperloop_dataset_link" (the
-Hyperloop dataset for the derived data, from operators) -- both added by
-hand once available -- and any per-species comments ("species_comments":
-{species name: comment}) make it into the doc. A comment that is empty or
-whose key is missing is simply skipped. The performance overview (not
-needed by analysers reading the cuts) is rendered last, after all species.
+"title", general "comment", "test_train_id"/"production_train_id" (linked
+to their Hyperloop train-run overview pages), the "cutculator_input_link"
+(a link to an AnalysisResults.root from the production train, for
+analysers to feed into cutculator.py themselves), the
+"hyperloop_dataset_link" (the Hyperloop dataset for the derived data, from
+operators) -- the latter two added by hand once available -- and any
+per-species comments ("species_comments": {species name: comment}) make
+it into the doc. A comment that is empty or whose key is missing is
+simply skipped. The performance overview (not needed by analysers reading
+the cuts) is rendered last, after all species.
 
 Example:
 
@@ -39,7 +41,7 @@ import re
 
 import ROOT  # pylint: disable=import-error
 
-from hyperloop_common import human_bytes, human_seconds
+from hyperloop_common import human_bytes, human_seconds, train_run_url
 
 VALUE_DELIM = "___"
 SECTION_DELIM = ":::"
@@ -188,15 +190,19 @@ def render_header(outdir, doc_config):
         lines.append("\n**Hyperloop dataset:** _pending -- added once the derived data has been produced_")
 
     full_config_path = os.path.join(outdir, "full_config.json")
-    train_id = doc_config.get("train_id")
+    test_train_id = doc_config.get("test_train_id")
+    production_train_id = doc_config.get("production_train_id")
     rows = []
     if os.path.exists(full_config_path):
         with open(full_config_path) as f:
             cfg = json.load(f)
         rows.append(f"| Software tag | {cfg.get('package_tag', '?')} |")
-    if train_id:
-        train_url = f"https://alimonitor.cern.ch/hyperloop/train-run/{train_id}/general"
-        rows.append(f"| Test train | [{train_id}]({train_url}) |")
+    if test_train_id:
+        rows.append(f"| Test train | [{test_train_id}]({train_run_url(test_train_id)}) |")
+    if production_train_id:
+        rows.append(f"| Production train | [{production_train_id}]({train_run_url(production_train_id)}) |")
+    else:
+        rows.append("| Production train | _pending -- added once the production train is composed_ |")
     if rows:
         lines.append("")
         lines.append("| | |")

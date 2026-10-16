@@ -5,10 +5,10 @@
         generate_cuts_doc.py can turn it into derived-data documentation.
 
 Takes a small JSON config file (see configs/*.json for an example) with at
-least a "train_id" field. It resolves the rest itself: calls the Hyperloop
-API for the train's "full" test metadata (performance overview: reduction
-factor, PSS memory, throughput, expected resources for the full run), and
-downloads the test's cached output -- AnalysisResults.root,
+least a "test_train_id" field. It resolves the rest itself: calls the
+Hyperloop API for that train's "full" test metadata (performance overview:
+reduction factor, PSS memory, throughput, expected resources for the full
+run), and downloads the test's cached output -- AnalysisResults.root,
 configuration.json, etc. -- from the plain HTTPS directory Hyperloop serves
 it from:
 
@@ -18,24 +18,34 @@ Both the API and the directory require your personal grid certificate as a
 TLS client cert -- the same usercert.pem/userkey.pem used for alien://
 access.
 
-Config file fields (only train_id is used here; the rest are read by
+A femto cuts validation run typically has two trains, both with their own
+Hyperloop overview page: a "test train" run on a small dataset first (this
+is the one this script downloads from), and -- once that looks right -- a
+"production train" composed on the full dataset (which gets its own test
+too, but we only need a link to it, not its output).
+
+Config file fields (only test_train_id is used here; the rest are read by
 generate_cuts_doc.py):
-    title                 doc title (H1); falls back to "Configured cuts"
-    comment                free text, for humans reading the config
-    train_id               the Hyperloop train number (required)
-    cutculator_input_link  link to an AnalysisResults.root from the real
-                            (non-test) production train, for analysers to
-                            feed into cutculator.py themselves; filled in
-                            by hand once that train has run -- leave
-                            null/empty until then, generate_cuts_doc.py
-                            renders a placeholder in its place
-    hyperloop_dataset_link link to the Hyperloop dataset for the derived
-                            data, filled in by hand once operators provide
-                            it after the derived data has been produced;
-                            same null/placeholder behaviour
-    species_comments       optional {species name: comment} map, rendered
-                            under that species' heading; empty or missing
-                            entries are skipped
+    title                  doc title (H1); falls back to "Configured cuts"
+    comment                 free text, for humans reading the config
+    test_train_id           the Hyperloop train number of the small-dataset
+                             validation test (required)
+    production_train_id     the Hyperloop train number of the composed,
+                             full-dataset train, once it exists; leave
+                             null/empty until then
+    cutculator_input_link   link to an AnalysisResults.root from the
+                             production train, for analysers to feed into
+                             cutculator.py themselves; filled in by hand
+                             once that train has run -- leave null/empty
+                             until then, generate_cuts_doc.py renders a
+                             placeholder in its place
+    hyperloop_dataset_link  link to the Hyperloop dataset for the derived
+                             data, filled in by hand once operators provide
+                             it after the derived data has been produced;
+                             same null/placeholder behaviour
+    species_comments        optional {species name: comment} map, rendered
+                             under that species' heading; empty or missing
+                             entries are skipped
 
 Example:
 
@@ -173,14 +183,14 @@ def download_file(session, base_url, filename, outdir):
 def load_config(config_path):
     with open(config_path) as f:
         cfg = json.load(f)
-    if not cfg.get("train_id"):
-        raise SystemExit(f"{config_path}: missing required field 'train_id'")
+    if not cfg.get("test_train_id"):
+        raise SystemExit(f"{config_path}: missing required field 'test_train_id'")
     return cfg
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("config", help="JSON config file with at least a train_id field (see configs/*.json)")
+    parser.add_argument("config", help="JSON config file with at least a test_train_id field (see configs/*.json)")
     parser.add_argument("outdir", help="Directory to download into (created if missing)")
     parser.add_argument("--cert", default=os.path.expanduser("~/.globus/usercert.pem"), help="Grid certificate (default: ~/.globus/usercert.pem)")
     parser.add_argument("--key", default=os.path.expanduser("~/.globus/userkey.pem"), help="Grid certificate key (default: ~/.globus/userkey.pem)")
@@ -193,7 +203,7 @@ def main():
                   f"Pass --cert/--key if your certificate lives elsewhere.")
 
     cfg = load_config(args.config)
-    test_id, kind = parse_train_or_test_id(str(cfg["train_id"]))
+    test_id, kind = parse_train_or_test_id(str(cfg["test_train_id"]))
     base_url = test_directory_url(test_id)
     os.makedirs(args.outdir, exist_ok=True)
 

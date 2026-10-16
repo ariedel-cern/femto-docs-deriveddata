@@ -7,7 +7,8 @@
 | | |
 | --- | --- |
 | Software tag | VO_ALICE@O2Physics::daily-20261008-0000-1 |
-| Test train | [782224](https://alimonitor.cern.ch/hyperloop/train-run/782224/general) |
+| Test train | [777250](https://alimonitor.cern.ch/hyperloop/train-run/777250/general) |
+| Production train | _pending -- added once the production train is composed_ |
 
 ## Collision
 
@@ -536,8 +537,8 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 
 | | |
 | --- | --- |
-| Reduction factor | 94.4x |
-| PSS memory | avg 4.2 GB, max 4.7 GB |
-| Throughput | 3.6 MB/s per core |
-| Expected resources (full run) | 1012d 8h 14m 50s core-time |
-| Expected output size (full run) | 3.2 TB |
+| Reduction factor | 87.5x |
+| PSS memory | avg 4.0 GB, max 4.2 GB |
+| Throughput | 3.1 MB/s per core |
+| Expected resources (full run) | 62d 7h 5m 35s core-time |
+| Expected output size (full run) | 183.8 GB |

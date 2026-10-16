@@ -15,6 +15,13 @@ import urllib3
 
 TRAIN_WORKDIR_BASE = "https://alimonitor.cern.ch/train-workdir/tests"
 API_BASE = "https://alimonitor.cern.ch/alihyperloop-data"
+HYPERLOOP_BASE = "https://alimonitor.cern.ch/hyperloop"
+
+
+def train_run_url(train_id):
+    """The permanent Hyperloop overview page for a train run (unlike the
+    cached test-output directory, this isn't cleaned up)."""
+    return f"{HYPERLOOP_BASE}/train-run/{train_id}/general"
 
 
 def parse_train_or_test_id(url_or_id):
