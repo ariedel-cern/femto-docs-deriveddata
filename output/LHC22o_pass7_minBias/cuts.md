@@ -1,6 +1,8 @@
 # Configured cuts
 
-Source: 778977 (resolved train id 778977, [test output](https://alimonitor.cern.ch/train-workdir/tests/0077/00778977/))
+> Femto producer cuts for the GP derived-data train, wagon AAA_FemtoProducer_GP_Derived_22_24_v3
+
+**Download the derived data:** _pending -- added once the production train completes_
 
 | | |
 | --- | --- |
@@ -19,119 +21,6 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 | Throughput | 3.8 MB/s per core |
 | Expected resources (full run) | 976d 1h 56m 2s core-time |
 | Expected output size (full run) | 3.2 TB |
-
-## Anti Lambda
-
-### Prefilters
-
-| Filter | Value |
-| --- | --- |
-| ptMin | 0 |
-| ptMax | 99 |
-| etaMin | -99 |
-| etaMax | 99 |
-| phiMin | 0 |
-| phiMax | 6.28319 |
-| rejectK0short | 1 |
-| k0shortMassMin | 0.48 |
-| k0shortMassMax | 0.515 |
-| rejectLambda | 0 |
-| lambdaMassMin | 1 |
-| lambdaMassMax | 1.18 |
-
-### Cuts
-
-**Min. CPA (cosine pointing angle)**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.988000 |  |
-| 0 | minimal | 0.990000 |  |
-| 1 | minimal | 0.992000 |  |
-
-**Max. DCA of the daughters at decay vertex**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 1.500000 |  |
-| 2 | minimal | 1.200000 |  |
-| 3 | minimal | 1.000000 |  |
-
-**Max. distance of decay vertex in x,y,z**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 100.000000 |  |
-
-**Min. transverse radius**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.200000 |  |
-| 4 | minimal | 0.300000 |  |
-| 5 | minimal | 0.500000 |  |
-
-**Max. transverse radius**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 100.000000 |  |
-
-**Max. absolute pseudo rapidity of daughters**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.830000 |  |
-| 6 | minimal | 0.800000 |  |
-| 7 | minimal | 0.770000 |  |
-
-**Min. |DCAxy| of the daughters from primary vertex**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.040000 |  |
-| 8 | minimal | 0.050000 |  |
-| 9 | minimal | 0.060000 |  |
-
-**Min. number of TPC clusters of daughters**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 70.000000 |  |
-| 10 | minimal | 80.000000 |  |
-| 11 | minimal | 90.000000 |  |
-
-**TPC Pion PID for positive daughter**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 5.000000 |  |
-| 12 | minimal | 4.000000 |  |
-| 13 | minimal | 3.000000 |  |
-
-**TPC Proton PID for negative daughter**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 5.000000 |  |
-| 14 | minimal | 4.000000 |  |
-| 15 | minimal | 3.000000 |  |
-
-**TOF Pion PID for positive daughter**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 16 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 17 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 18 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-
-**TOF Proton PID for negative daughter**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 19 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 20 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 21 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
 
 ## Collision
 
@@ -152,96 +41,110 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 
 ### Cuts
 
-**Sel8**
-
-| Bit | Type | Value | Comment |
+| Selection | Type | Value | Comment |
 | --- | --- | --- | --- |
-| 0 | optional | 1.000000 |  |
+| Sel8 | optional | 1.000000 |  |
+| RCT flags ok | minimal | 1.000000 | label = CBT_hadronPID; useZdc = 0; treatLimitedAcceptanceAsBad = 0 |
+| No same bunch pileup | optional | 1.000000 |  |
+| Is vertex ITS TPC | optional | 1.000000 |  |
+| Is good zvtx FT0 vs PV | optional | 1.000000 |  |
+| No collision in time range narrow | optional | 1.000000 |  |
+| No collision in time range strict | optional | 1.000000 |  |
+| No collision in time range standard | optional | 1.000000 |  |
+| No collision in ROF strict | optional | 1.000000 |  |
+| No collision in ROF standard | optional | 1.000000 |  |
+| No high mult collisions in previous ROF | optional | 1.000000 |  |
+| Is good ITS layer 3 | optional | 1.000000 |  |
+| Is good ITS layer 0-3 | optional | 1.000000 |  |
+| Is good ITS layer all | optional | 1.000000 |  |
+| Minimum Sphericity | minimal | 0.000000 |  |
+| Minimum Sphericity | minimal | 0.700000 |  |
 
-**RCT flags ok**
+## Track
 
-| Bit | Type | Value | Comment |
+### Prefilters
+
+| Filter | Value |
+| --- | --- |
+| ptMin | 0.136 |
+| ptMax | 6 |
+| etaMin | -0.83 |
+| etaMax | 0.83 |
+| phiMin | 0 |
+| phiMax | 6.28319 |
+
+### Cuts
+
+| Selection | Type | Value | Comment |
 | --- | --- | --- | --- |
-| always applied | minimal | 1.000000 | label = CBT_hadronPID; useZdc = 0; treatLimitedAcceptanceAsBad = 0 |
-
-**No same bunch pileup**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 1 | optional | 1.000000 |  |
-
-**Is vertex ITS TPC**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 2 | optional | 1.000000 |  |
-
-**Is good zvtx FT0 vs PV**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 3 | optional | 1.000000 |  |
-
-**No collision in time range narrow**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 4 | optional | 1.000000 |  |
-
-**No collision in time range strict**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 5 | optional | 1.000000 |  |
-
-**No collision in time range standard**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 6 | optional | 1.000000 |  |
-
-**No collision in ROF strict**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 7 | optional | 1.000000 |  |
-
-**No collision in ROF standard**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 8 | optional | 1.000000 |  |
-
-**No high mult collisions in previous ROF**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 9 | optional | 1.000000 |  |
-
-**Is good ITS layer 3**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 10 | optional | 1.000000 |  |
-
-**Is good ITS layer 0-3**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 11 | optional | 1.000000 |  |
-
-**Is good ITS layer all**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 12 | optional | 1.000000 |  |
-
-**Minimum Sphericity**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.000000 |  |
-| 13 | minimal | 0.700000 |  |
+| Min. number of TPC clusters | minimal | 90.000000 |  |
+| Min. number of TPC clusters | minimal | 100.000000 |  |
+| Min. number of TPC clusters | minimal | 110.000000 |  |
+| Min. number of TPC clusters | minimal | 120.000000 |  |
+| Min. number of crossed TPC rows | minimal | 80.000000 |  |
+| Min. number of crossed TPC rows | minimal | 90.000000 |  |
+| Min. number of crossed TPC rows | minimal | 100.000000 |  |
+| Min. number of crossed TPC rows | minimal | 110.000000 |  |
+| Min. fraction of TPC clusters over TPC crossed rows | minimal | 0.000000 |  |
+| Max. number of shared TPC clusters | minimal | 160.000000 |  |
+| Max. fractions of shared TPC clusters | minimal | 1.000000 |  |
+| Max. fractions of shared TPC clusters | minimal | 0.800000 |  |
+| Max. fractions of shared TPC clusters | minimal | 0.400000 |  |
+| Min. number of ITS clusters | minimal | 5.000000 |  |
+| Min. number of ITS clusters | minimal | 6.000000 |  |
+| Min. number of ITS clusters | minimal | 7.000000 |  |
+| Min. number of ITS clusters in the inner barrel | minimal | 1.000000 |  |
+| Min. number of ITS clusters in the inner barrel | minimal | 3.000000 |  |
+| Max. |DCA_xy| (cm) as a function of pT | minimal | 0.1 |  |
+| Max. |DCA_xy| (cm) as a function of pT | minimal | 0.004+0.013*pow(x,-1) |  |
+| Max. |DCA_z| (cm) as a function of pT | minimal | 0.2 |  |
+| Max. |DCA_z| (cm) as a function of pT | minimal | 0.004+0.013*pow(x,-1) |  |
+| ITS He3 PID | optional | -1.5;3.40282e+38 |  |
+| ITS He3 PID | optional | -1.3;3.40282e+38 |  |
+| TPC Pion PID | optional | -3.5;3 |  |
+| TPC Pion PID | optional | -3;3 |  |
+| TPC Pion PID | optional | -2.5;2.5 |  |
+| TPC Kaon PID | optional | -3.5;3 |  |
+| TPC Kaon PID | optional | -3;3 |  |
+| TPC Kaon PID | optional | -2.5;2.5 |  |
+| TPC Proton PID | optional | -3.5;3 |  |
+| TPC Proton PID | optional | -3;3 |  |
+| TPC Proton PID | optional | -2.5;2.5 |  |
+| TPC He3 PID | optional | -2.5;2.5 |  |
+| TPC He3 PID | optional | -2;2 |  |
+| TPC He3 PID | optional | -1.5;1.5 |  |
+| TPC+ITS Pion PID | optional | 3.500000 |  |
+| TPC+ITS Pion PID | optional | 3.000000 |  |
+| TPC+ITS Pion PID | optional | 2.500000 |  |
+| TPC+ITS Kaon PID | optional | 3.500000 |  |
+| TPC+ITS Kaon PID | optional | 3.000000 |  |
+| TPC+ITS Kaon PID | optional | 2.500000 |  |
+| TPC+ITS Proton PID | optional | 3.500000 |  |
+| TPC+ITS Proton PID | optional | 3.000000 |  |
+| TPC+ITS Proton PID | optional | 2.500000 |  |
+| TPC+ITS Deuteron PID | optional | 3.500000 |  |
+| TPC+ITS Deuteron PID | optional | 3.000000 |  |
+| TPC+ITS Deuteron PID | optional | 2.500000 |  |
+| TPC+ITS Triton PID | optional | 3.500000 |  |
+| TPC+ITS Triton PID | optional | 3.000000 |  |
+| TPC+ITS Triton PID | optional | 2.500000 |  |
+| TPC+TOF Pion PID | optional | 3.500000 | minMomTofPion = 0.500000 |
+| TPC+TOF Pion PID | optional | 3.000000 | minMomTofPion = 0.500000 |
+| TPC+TOF Pion PID | optional | 2.500000 | minMomTofPion = 0.500000 |
+| TPC+TOF Kaon PID | optional | 3.500000 | minMomTofKaon = 0.400000 |
+| TPC+TOF Kaon PID | optional | 3.000000 | minMomTofKaon = 0.400000 |
+| TPC+TOF Kaon PID | optional | 2.500000 | minMomTofKaon = 0.400000 |
+| TPC+TOF Proton PID | optional | 3.500000 | minMomTofProton = 0.750000 |
+| TPC+TOF Proton PID | optional | 3.000000 | minMomTofProton = 0.750000 |
+| TPC+TOF Proton PID | optional | 2.500000 | minMomTofProton = 0.750000 |
+| TPC+TOF Deuteron PID | optional | 3.500000 | minMomTofDeuteron = 1.200000 |
+| TPC+TOF Deuteron PID | optional | 3.000000 | minMomTofDeuteron = 1.200000 |
+| TPC+TOF Deuteron PID | optional | 2.500000 | minMomTofDeuteron = 1.200000 |
+| TPC+TOF Triton PID | optional | 3.000000 | minMomTofTriton = 2.000000 |
+| TPC+TOF Triton PID | optional | 2.500000 | minMomTofTriton = 2.000000 |
+| TPC+TOF He3 PID | optional | 3.500000 | minMomTofHelium = 99.000000 |
+| TPC+TOF He3 PID | optional | 3.000000 | minMomTofHelium = 99.000000 |
+| TPC+TOF He3 PID | optional | 2.500000 | minMomTofHelium = 99.000000 |
 
 ## K0short
 
@@ -264,89 +167,37 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 
 ### Cuts
 
-**Min. CPA (cosine pointing angle)**
-
-| Bit | Type | Value | Comment |
+| Selection | Type | Value | Comment |
 | --- | --- | --- | --- |
-| always applied | minimal | 0.988000 |  |
-| 0 | minimal | 0.990000 |  |
-| 1 | minimal | 0.992000 |  |
-
-**Max. DCA of the daughters at decay vertex**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 1.500000 |  |
-| 2 | minimal | 1.200000 |  |
-| 3 | minimal | 1.000000 |  |
-
-**Max. distance of decay vertex in x,y,z**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 100.000000 |  |
-
-**Min. transverse radius**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.200000 |  |
-| 4 | minimal | 0.300000 |  |
-| 5 | minimal | 0.500000 |  |
-
-**Max. transverse radius**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 100.000000 |  |
-
-**Max. absolute pseudo rapidity of daughters**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.830000 |  |
-| 6 | minimal | 0.800000 |  |
-| 7 | minimal | 0.770000 |  |
-
-**Min. |DCAxy| of the daughters from primary vertex**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.040000 |  |
-| 8 | minimal | 0.050000 |  |
-| 9 | minimal | 0.060000 |  |
-
-**Min. number of TPC clusters of daughters**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 70.000000 |  |
-| 10 | minimal | 80.000000 |  |
-| 11 | minimal | 90.000000 |  |
-
-**TPC Pion PID for positive daughter**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 5.000000 |  |
-| 12 | minimal | 4.000000 |  |
-| 13 | minimal | 3.000000 |  |
-
-**TPC Pion PID for negative daughter**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 5.000000 |  |
-| 14 | minimal | 4.000000 |  |
-| 15 | minimal | 3.000000 |  |
-
-**TOF Pion PID for negative daughter**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 16 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 17 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 18 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Min. CPA (cosine pointing angle) | minimal | 0.988000 |  |
+| Min. CPA (cosine pointing angle) | minimal | 0.990000 |  |
+| Min. CPA (cosine pointing angle) | minimal | 0.992000 |  |
+| Max. DCA of the daughters at decay vertex | minimal | 1.500000 |  |
+| Max. DCA of the daughters at decay vertex | minimal | 1.200000 |  |
+| Max. DCA of the daughters at decay vertex | minimal | 1.000000 |  |
+| Max. distance of decay vertex in x,y,z | minimal | 100.000000 |  |
+| Min. transverse radius | minimal | 0.200000 |  |
+| Min. transverse radius | minimal | 0.300000 |  |
+| Min. transverse radius | minimal | 0.500000 |  |
+| Max. transverse radius | minimal | 100.000000 |  |
+| Max. absolute pseudo rapidity of daughters | minimal | 0.830000 |  |
+| Max. absolute pseudo rapidity of daughters | minimal | 0.800000 |  |
+| Max. absolute pseudo rapidity of daughters | minimal | 0.770000 |  |
+| Min. |DCAxy| of the daughters from primary vertex | minimal | 0.040000 |  |
+| Min. |DCAxy| of the daughters from primary vertex | minimal | 0.050000 |  |
+| Min. |DCAxy| of the daughters from primary vertex | minimal | 0.060000 |  |
+| Min. number of TPC clusters of daughters | minimal | 70.000000 |  |
+| Min. number of TPC clusters of daughters | minimal | 80.000000 |  |
+| Min. number of TPC clusters of daughters | minimal | 90.000000 |  |
+| TPC Pion PID for positive daughter | minimal | 5.000000 |  |
+| TPC Pion PID for positive daughter | minimal | 4.000000 |  |
+| TPC Pion PID for positive daughter | minimal | 3.000000 |  |
+| TPC Pion PID for negative daughter | minimal | 5.000000 |  |
+| TPC Pion PID for negative daughter | minimal | 4.000000 |  |
+| TPC Pion PID for negative daughter | minimal | 3.000000 |  |
+| TOF Pion PID for negative daughter | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| TOF Pion PID for negative daughter | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| TOF Pion PID for negative daughter | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
 
 ## Lambda
 
@@ -369,319 +220,40 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 
 ### Cuts
 
-**Min. CPA (cosine pointing angle)**
-
-| Bit | Type | Value | Comment |
+| Selection | Type | Value | Comment |
 | --- | --- | --- | --- |
-| always applied | minimal | 0.988000 |  |
-| 0 | minimal | 0.990000 |  |
-| 1 | minimal | 0.992000 |  |
-
-**Max. DCA of the daughters at decay vertex**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 1.500000 |  |
-| 2 | minimal | 1.200000 |  |
-| 3 | minimal | 1.000000 |  |
-
-**Max. distance of decay vertex in x,y,z**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 100.000000 |  |
-
-**Min. transverse radius**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.200000 |  |
-| 4 | minimal | 0.300000 |  |
-| 5 | minimal | 0.500000 |  |
-
-**Max. transverse radius**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 100.000000 |  |
-
-**Max. absolute pseudo rapidity of daughters**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.830000 |  |
-| 6 | minimal | 0.800000 |  |
-| 7 | minimal | 0.770000 |  |
-
-**Min. |DCAxy| of the daughters from primary vertex**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.040000 |  |
-| 8 | minimal | 0.050000 |  |
-| 9 | minimal | 0.060000 |  |
-
-**Min. number of TPC clusters of daughters**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 70.000000 |  |
-| 10 | minimal | 80.000000 |  |
-| 11 | minimal | 90.000000 |  |
-
-**TPC Proton PID for positive daughter**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 5.000000 |  |
-| 12 | minimal | 4.000000 |  |
-| 13 | minimal | 3.000000 |  |
-
-**TPC Pion PID for negative daughter**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 5.000000 |  |
-| 14 | minimal | 4.000000 |  |
-| 15 | minimal | 3.000000 |  |
-
-**TOF Proton PID for positive daughter**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 16 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 17 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 18 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-
-**TOF Pion PID for negative daughter**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 19 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 20 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 21 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-
-## Omega
-
-### Prefilters
-
-| Filter | Value |
-| --- | --- |
-| ptMin | 0 |
-| ptMax | 99 |
-| etaMin | -99 |
-| etaMax | 99 |
-| phiMin | 0 |
-| phiMax | 6.28319 |
-| lambdaMassMin | 1.092 |
-| lambdaMassMax | 1.139 |
-| xiMassMin | 1.313 |
-| xiMassMax | 1.332 |
-| rejectOmega | 0 |
-| omegaMassMin | 1.55 |
-| omegaMassMax | 1.8 |
-| rejectXi | 1 |
-
-### Cuts
-
-**Cascade CPA Min**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.98 |  |
-| 0 | minimal | 0.9947 |  |
-
-**Cascade DCA Daughters Max**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.600000 |  |
-| 1 | minimal | 0.500000 |  |
-| 2 | minimal | 0.250000 |  |
-
-**Cascade Transverse Radius Min**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.800000 |  |
-| 3 | minimal | 1.100000 |  |
-
-**Lambda CPA Min**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.970000 |  |
-| 4 | minimal | 0.980000 |  |
-| 5 | minimal | 0.987600 |  |
-
-**Lambda DCA Daughter Max**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 1.000000 |  |
-| 6 | minimal | 0.600000 |  |
-| 7 | minimal | 0.500000 |  |
-
-**Lambda Transverse Radius Min**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 1.400000 |  |
-| 8 | minimal | 2.500000 |  |
-
-**Lambda DCA to PV Min**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.020000 |  |
-| 9 | minimal | 0.030000 |  |
-| 10 | minimal | 0.040000 |  |
-
-**Daughter Abs Eta Max**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.830000 |  |
-| 11 | minimal | 0.800000 |  |
-| 12 | minimal | 0.770000 |  |
-
-**Daughter TPC Clusters Min**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 70.000000 |  |
-| 13 | minimal | 80.000000 |  |
-| 14 | minimal | 90.000000 |  |
-
-**Daughter |DCAxy| Min**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.040000 |  |
-| 15 | minimal | 0.050000 |  |
-| 16 | minimal | 0.060000 |  |
-
-**Bachelor TPC Kaon PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 5.000000 |  |
-| 17 | minimal | 4.000000 |  |
-| 18 | minimal | 3.000000 |  |
-
-**Bachelor TOF Kaon PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 19 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 20 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 21 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-
-**Positive Daughter TPC PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 5.000000 |  |
-| 22 | minimal | 4.000000 |  |
-| 23 | minimal | 3.000000 |  |
-
-**Negative Daughter TPC PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 5.000000 |  |
-| 24 | minimal | 4.000000 |  |
-| 25 | minimal | 3.000000 |  |
-
-**Positive Daughter TOF PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 26 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 27 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 28 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-
-## Photon
-
-### Prefilters
-
-| Filter | Value |
-| --- | --- |
-| ptMin | 0 |
-| ptMax | 99 |
-| etaMin | -10 |
-| etaMax | 10 |
-| phiMin | 0 |
-| phiMax | 6.28319 |
-| mGammaAbsMax | 1e+10 |
-
-### Cuts
-
-**Min. CPA (cosine pointing angle)**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.850000 |  |
-| 0 | minimal | 0.900000 |  |
-| 1 | minimal | 0.950000 |  |
-
-**Max. |DCAxy| to PV**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 999999995904.000000 |  |
-
-**Max. |DCAz| to PV**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 999999995904.000000 |  |
-
-**Max. chi2/NDF of conversion vertex**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 999999995904.000000 |  |
-
-**Min. transverse radius**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.000000 |  |
-| 2 | minimal | 5.000000 |  |
-| 3 | minimal | 10.000000 |  |
-
-**Max. transverse radius**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 180.000000 |  |
-| 4 | minimal | 160.000000 |  |
-| 5 | minimal | 120.000000 |  |
-
-**Max. absolute pseudorapidity of daughters**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.950000 |  |
-| 6 | minimal | 0.900000 |  |
-| 7 | minimal | 0.850000 |  |
-
-**TPC electron PID for positive daughter**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 3.500000 | keepDaughtersWithoutTpc = 1 |
-| 8 | minimal | 3.000000 | keepDaughtersWithoutTpc = 1 |
-| 9 | minimal | 2.500000 | keepDaughtersWithoutTpc = 1 |
-
-**TPC electron PID for negative daughter**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 3.500000 | keepDaughtersWithoutTpc = 1 |
-| 10 | minimal | 3.000000 | keepDaughtersWithoutTpc = 1 |
-| 11 | minimal | 2.500000 | keepDaughtersWithoutTpc = 1 |
+| Min. CPA (cosine pointing angle) | minimal | 0.988000 |  |
+| Min. CPA (cosine pointing angle) | minimal | 0.990000 |  |
+| Min. CPA (cosine pointing angle) | minimal | 0.992000 |  |
+| Max. DCA of the daughters at decay vertex | minimal | 1.500000 |  |
+| Max. DCA of the daughters at decay vertex | minimal | 1.200000 |  |
+| Max. DCA of the daughters at decay vertex | minimal | 1.000000 |  |
+| Max. distance of decay vertex in x,y,z | minimal | 100.000000 |  |
+| Min. transverse radius | minimal | 0.200000 |  |
+| Min. transverse radius | minimal | 0.300000 |  |
+| Min. transverse radius | minimal | 0.500000 |  |
+| Max. transverse radius | minimal | 100.000000 |  |
+| Max. absolute pseudo rapidity of daughters | minimal | 0.830000 |  |
+| Max. absolute pseudo rapidity of daughters | minimal | 0.800000 |  |
+| Max. absolute pseudo rapidity of daughters | minimal | 0.770000 |  |
+| Min. |DCAxy| of the daughters from primary vertex | minimal | 0.040000 |  |
+| Min. |DCAxy| of the daughters from primary vertex | minimal | 0.050000 |  |
+| Min. |DCAxy| of the daughters from primary vertex | minimal | 0.060000 |  |
+| Min. number of TPC clusters of daughters | minimal | 70.000000 |  |
+| Min. number of TPC clusters of daughters | minimal | 80.000000 |  |
+| Min. number of TPC clusters of daughters | minimal | 90.000000 |  |
+| TPC Proton PID for positive daughter | minimal | 5.000000 |  |
+| TPC Proton PID for positive daughter | minimal | 4.000000 |  |
+| TPC Proton PID for positive daughter | minimal | 3.000000 |  |
+| TPC Pion PID for negative daughter | minimal | 5.000000 |  |
+| TPC Pion PID for negative daughter | minimal | 4.000000 |  |
+| TPC Pion PID for negative daughter | minimal | 3.000000 |  |
+| TOF Proton PID for positive daughter | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| TOF Proton PID for positive daughter | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| TOF Proton PID for positive daughter | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| TOF Pion PID for negative daughter | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| TOF Pion PID for negative daughter | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| TOF Pion PID for negative daughter | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
 
 ## Sigma
 
@@ -700,102 +272,35 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 
 ### Cuts
 
-**kinkTopoDcaMax**
-
-| Bit | Type | Value | Comment |
+| Selection | Type | Value | Comment |
 | --- | --- | --- | --- |
-| always applied | minimal | 2.000000 |  |
-
-**transRadMin**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 19.600000 |  |
-
-**transRadMax**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 100.000000 |  |
-
-**dauAbsEtaMax**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 1.000000 |  |
-| 0 | minimal | 0.900000 |  |
-| 1 | minimal | 0.800000 |  |
-
-**dauDcaPvMin**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.100000 |  |
-
-**mothDcaPvMax**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.025000 |  |
-| 2 | minimal | 0.020000 |  |
-
-**chaDauTpcPion**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 5.000000 |  |
-| 3 | minimal | 4.000000 |  |
-
-**alphaAPMin**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | -1.000000 |  |
-
-**alphaAPMax**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.000000 |  |
-
-**qtAPMin**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.145000 |  |
-| 4 | minimal | 0.150000 |  |
-| 5 | minimal | 0.155000 |  |
-
-**qtAPMax**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.210000 |  |
-| 6 | minimal | 0.205000 |  |
-| 7 | minimal | 0.200000 |  |
-
-**cosPointingAngleMin**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.988000 |  |
-| 8 | minimal | 0.990000 |  |
-| 9 | minimal | 0.992000 |  |
-
-**ptOriginalMin**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 1.200000 |  |
-| 10 | minimal | 1.400000 |  |
-| 11 | minimal | 1.600000 |  |
-| 12 | minimal | 1.800000 |  |
-
-**ptOriginalMax**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 10.000000 |  |
+| kinkTopoDcaMax | minimal | 2.000000 |  |
+| transRadMin | minimal | 19.600000 |  |
+| transRadMax | minimal | 100.000000 |  |
+| dauAbsEtaMax | minimal | 1.000000 |  |
+| dauAbsEtaMax | minimal | 0.900000 |  |
+| dauAbsEtaMax | minimal | 0.800000 |  |
+| dauDcaPvMin | minimal | 0.100000 |  |
+| mothDcaPvMax | minimal | 0.025000 |  |
+| mothDcaPvMax | minimal | 0.020000 |  |
+| chaDauTpcPion | minimal | 5.000000 |  |
+| chaDauTpcPion | minimal | 4.000000 |  |
+| alphaAPMin | minimal | -1.000000 |  |
+| alphaAPMax | minimal | 0.000000 |  |
+| qtAPMin | minimal | 0.145000 |  |
+| qtAPMin | minimal | 0.150000 |  |
+| qtAPMin | minimal | 0.155000 |  |
+| qtAPMax | minimal | 0.210000 |  |
+| qtAPMax | minimal | 0.205000 |  |
+| qtAPMax | minimal | 0.200000 |  |
+| cosPointingAngleMin | minimal | 0.988000 |  |
+| cosPointingAngleMin | minimal | 0.990000 |  |
+| cosPointingAngleMin | minimal | 0.992000 |  |
+| ptOriginalMin | minimal | 1.200000 |  |
+| ptOriginalMin | minimal | 1.400000 |  |
+| ptOriginalMin | minimal | 1.600000 |  |
+| ptOriginalMin | minimal | 1.800000 |  |
+| ptOriginalMax | minimal | 10.000000 |  |
 
 ## Sigma Plus
 
@@ -814,318 +319,38 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 
 ### Cuts
 
-**kinkTopoDcaMax**
-
-| Bit | Type | Value | Comment |
+| Selection | Type | Value | Comment |
 | --- | --- | --- | --- |
-| always applied | minimal | 2.000000 |  |
-
-**transRadMin**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 19.600000 |  |
-
-**transRadMax**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 100.000000 |  |
-
-**dauAbsEtaMax**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 1.000000 |  |
-| 0 | minimal | 0.900000 |  |
-| 1 | minimal | 0.800000 |  |
-
-**dauDcaPvMin**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.100000 |  |
-
-**mothDcaPvMax**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.025000 |  |
-| 2 | minimal | 0.020000 |  |
-
-**chaDauTpcProton**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 5.000000 |  |
-| 3 | minimal | 4.000000 |  |
-
-**chaDauTofProton**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | neutral | 4.500000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 4 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 5 | neutral | 3.500000 | requireTof = 0; keepTracksWithoutTof = 1 |
-
-**alphaAPMin**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.000000 |  |
-
-**alphaAPMax**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 1.000000 |  |
-
-**qtAPMin**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.100000 |  |
-| 6 | minimal | 0.125000 |  |
-| 7 | minimal | 0.150000 |  |
-
-**qtAPMax**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.220000 |  |
-| 8 | minimal | 0.210000 |  |
-| 9 | minimal | 0.200000 |  |
-
-**cosPointingAngleMin**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.988000 |  |
-| 10 | minimal | 0.990000 |  |
-| 11 | minimal | 0.992000 |  |
-
-**ptOriginalMin**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 1.200000 |  |
-| 12 | minimal | 1.400000 |  |
-| 13 | minimal | 1.600000 |  |
-| 14 | minimal | 1.800000 |  |
-
-**ptOriginalMax**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 10.000000 |  |
-
-## Track
-
-### Prefilters
-
-| Filter | Value |
-| --- | --- |
-| ptMin | 0.136 |
-| ptMax | 6 |
-| etaMin | -0.83 |
-| etaMax | 0.83 |
-| phiMin | 0 |
-| phiMax | 6.28319 |
-
-### Cuts
-
-**Min. number of TPC clusters**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 90.000000 |  |
-| 0 | minimal | 100.000000 |  |
-| 1 | minimal | 110.000000 |  |
-| 2 | minimal | 120.000000 |  |
-
-**Min. number of crossed TPC rows**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 80.000000 |  |
-| 3 | minimal | 90.000000 |  |
-| 4 | minimal | 100.000000 |  |
-| 5 | minimal | 110.000000 |  |
-
-**Min. fraction of TPC clusters over TPC crossed rows**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.000000 |  |
-
-**Max. number of shared TPC clusters**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 160.000000 |  |
-
-**Max. fractions of shared TPC clusters**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 1.000000 |  |
-| 6 | minimal | 0.800000 |  |
-| 7 | minimal | 0.400000 |  |
-
-**Min. number of ITS clusters**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 5.000000 |  |
-| 8 | minimal | 6.000000 |  |
-| 9 | minimal | 7.000000 |  |
-
-**Min. number of ITS clusters in the inner barrel**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 1.000000 |  |
-| 10 | minimal | 3.000000 |  |
-
-**Max. |DCA_xy| (cm) as a function of pT**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.1 |  |
-| 11 | minimal | 0.004+0.013*pow(x,-1) |  |
-
-**Max. |DCA_z| (cm) as a function of pT**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.2 |  |
-| 12 | minimal | 0.004+0.013*pow(x,-1) |  |
-
-**ITS He3 PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 13 | optional | -1.5;3.40282e+38 |  |
-| 14 | optional | -1.3;3.40282e+38 |  |
-
-**TPC Pion PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 15 | optional | -3.5;3 |  |
-| 16 | optional | -3;3 |  |
-| 17 | optional | -2.5;2.5 |  |
-
-**TPC Kaon PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 18 | optional | -3.5;3 |  |
-| 19 | optional | -3;3 |  |
-| 20 | optional | -2.5;2.5 |  |
-
-**TPC Proton PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 21 | optional | -3.5;3 |  |
-| 22 | optional | -3;3 |  |
-| 23 | optional | -2.5;2.5 |  |
-
-**TPC He3 PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 24 | optional | -2.5;2.5 |  |
-| 25 | optional | -2;2 |  |
-| 26 | optional | -1.5;1.5 |  |
-
-**TPC+ITS Pion PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 27 | optional | 3.500000 |  |
-| 28 | optional | 3.000000 |  |
-| 29 | optional | 2.500000 |  |
-
-**TPC+ITS Kaon PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 30 | optional | 3.500000 |  |
-| 31 | optional | 3.000000 |  |
-| 32 | optional | 2.500000 |  |
-
-**TPC+ITS Proton PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 33 | optional | 3.500000 |  |
-| 34 | optional | 3.000000 |  |
-| 35 | optional | 2.500000 |  |
-
-**TPC+ITS Deuteron PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 36 | optional | 3.500000 |  |
-| 37 | optional | 3.000000 |  |
-| 38 | optional | 2.500000 |  |
-
-**TPC+ITS Triton PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 39 | optional | 3.500000 |  |
-| 40 | optional | 3.000000 |  |
-| 41 | optional | 2.500000 |  |
-
-**TPC+TOF Pion PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 42 | optional | 3.500000 | minMomTofPion = 0.500000 |
-| 43 | optional | 3.000000 | minMomTofPion = 0.500000 |
-| 44 | optional | 2.500000 | minMomTofPion = 0.500000 |
-
-**TPC+TOF Kaon PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 45 | optional | 3.500000 | minMomTofKaon = 0.400000 |
-| 46 | optional | 3.000000 | minMomTofKaon = 0.400000 |
-| 47 | optional | 2.500000 | minMomTofKaon = 0.400000 |
-
-**TPC+TOF Proton PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 48 | optional | 3.500000 | minMomTofProton = 0.750000 |
-| 49 | optional | 3.000000 | minMomTofProton = 0.750000 |
-| 50 | optional | 2.500000 | minMomTofProton = 0.750000 |
-
-**TPC+TOF Deuteron PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 51 | optional | 3.500000 | minMomTofDeuteron = 1.200000 |
-| 52 | optional | 3.000000 | minMomTofDeuteron = 1.200000 |
-| 53 | optional | 2.500000 | minMomTofDeuteron = 1.200000 |
-
-**TPC+TOF Triton PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 54 | optional | 3.000000 | minMomTofTriton = 2.000000 |
-| 55 | optional | 2.500000 | minMomTofTriton = 2.000000 |
-
-**TPC+TOF He3 PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 56 | optional | 3.500000 | minMomTofHelium = 99.000000 |
-| 57 | optional | 3.000000 | minMomTofHelium = 99.000000 |
-| 58 | optional | 2.500000 | minMomTofHelium = 99.000000 |
+| kinkTopoDcaMax | minimal | 2.000000 |  |
+| transRadMin | minimal | 19.600000 |  |
+| transRadMax | minimal | 100.000000 |  |
+| dauAbsEtaMax | minimal | 1.000000 |  |
+| dauAbsEtaMax | minimal | 0.900000 |  |
+| dauAbsEtaMax | minimal | 0.800000 |  |
+| dauDcaPvMin | minimal | 0.100000 |  |
+| mothDcaPvMax | minimal | 0.025000 |  |
+| mothDcaPvMax | minimal | 0.020000 |  |
+| chaDauTpcProton | minimal | 5.000000 |  |
+| chaDauTpcProton | minimal | 4.000000 |  |
+| chaDauTofProton | neutral | 4.500000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| chaDauTofProton | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| chaDauTofProton | neutral | 3.500000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| alphaAPMin | minimal | 0.000000 |  |
+| alphaAPMax | minimal | 1.000000 |  |
+| qtAPMin | minimal | 0.100000 |  |
+| qtAPMin | minimal | 0.125000 |  |
+| qtAPMin | minimal | 0.150000 |  |
+| qtAPMax | minimal | 0.220000 |  |
+| qtAPMax | minimal | 0.210000 |  |
+| qtAPMax | minimal | 0.200000 |  |
+| cosPointingAngleMin | minimal | 0.988000 |  |
+| cosPointingAngleMin | minimal | 0.990000 |  |
+| cosPointingAngleMin | minimal | 0.992000 |  |
+| ptOriginalMin | minimal | 1.200000 |  |
+| ptOriginalMin | minimal | 1.400000 |  |
+| ptOriginalMin | minimal | 1.600000 |  |
+| ptOriginalMin | minimal | 1.800000 |  |
+| ptOriginalMax | minimal | 10.000000 |  |
 
 ## Xi
 
@@ -1150,127 +375,158 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 
 ### Cuts
 
-**Cascade CPA Min**
-
-| Bit | Type | Value | Comment |
+| Selection | Type | Value | Comment |
 | --- | --- | --- | --- |
-| always applied | minimal | 0.98 |  |
-| 0 | minimal | 0.9947 |  |
+| Cascade CPA Min | minimal | 0.98 |  |
+| Cascade CPA Min | minimal | 0.9947 |  |
+| Cascade DCA Daughters Max | minimal | 0.600000 |  |
+| Cascade DCA Daughters Max | minimal | 0.500000 |  |
+| Cascade DCA Daughters Max | minimal | 0.250000 |  |
+| Cascade Transverse Radius Min | minimal | 0.800000 |  |
+| Cascade Transverse Radius Min | minimal | 1.100000 |  |
+| Lambda CPA Min | minimal | 0.970000 |  |
+| Lambda CPA Min | minimal | 0.980000 |  |
+| Lambda CPA Min | minimal | 0.987600 |  |
+| Lambda DCA Daughter Max | minimal | 1.000000 |  |
+| Lambda DCA Daughter Max | minimal | 0.600000 |  |
+| Lambda DCA Daughter Max | minimal | 0.500000 |  |
+| Lambda Transverse Radius Min | minimal | 1.400000 |  |
+| Lambda Transverse Radius Min | minimal | 2.500000 |  |
+| Lambda DCA to PV Min | minimal | 0.020000 |  |
+| Lambda DCA to PV Min | minimal | 0.030000 |  |
+| Lambda DCA to PV Min | minimal | 0.040000 |  |
+| Daughter Abs Eta Max | minimal | 0.830000 |  |
+| Daughter Abs Eta Max | minimal | 0.800000 |  |
+| Daughter Abs Eta Max | minimal | 0.770000 |  |
+| Daughter TPC Clusters Min | minimal | 70.000000 |  |
+| Daughter TPC Clusters Min | minimal | 80.000000 |  |
+| Daughter TPC Clusters Min | minimal | 90.000000 |  |
+| Daughter |DCAxy| Min | minimal | 0.040000 |  |
+| Daughter |DCAxy| Min | minimal | 0.050000 |  |
+| Daughter |DCAxy| Min | minimal | 0.060000 |  |
+| Bachelor TPC Pion PID | minimal | 5.000000 |  |
+| Bachelor TPC Pion PID | minimal | 4.000000 |  |
+| Bachelor TPC Pion PID | minimal | 3.000000 |  |
+| Bachelor TOF Pion PID | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Bachelor TOF Pion PID | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Bachelor TOF Pion PID | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Positive Daughter TPC PID | minimal | 5.000000 |  |
+| Positive Daughter TPC PID | minimal | 4.000000 |  |
+| Positive Daughter TPC PID | minimal | 3.000000 |  |
+| Negative Daughter TPC PID | minimal | 5.000000 |  |
+| Negative Daughter TPC PID | minimal | 4.000000 |  |
+| Negative Daughter TPC PID | minimal | 3.000000 |  |
+| Positive Daughter TOF PID | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Positive Daughter TOF PID | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Positive Daughter TOF PID | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Negative Daughter TOF PID | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Negative Daughter TOF PID | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Negative Daughter TOF PID | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
 
-**Cascade DCA Daughters Max**
+## Omega
 
-| Bit | Type | Value | Comment |
+### Prefilters
+
+| Filter | Value |
+| --- | --- |
+| ptMin | 0 |
+| ptMax | 99 |
+| etaMin | -99 |
+| etaMax | 99 |
+| phiMin | 0 |
+| phiMax | 6.28319 |
+| lambdaMassMin | 1.092 |
+| lambdaMassMax | 1.139 |
+| xiMassMin | 1.313 |
+| xiMassMax | 1.332 |
+| rejectOmega | 0 |
+| omegaMassMin | 1.55 |
+| omegaMassMax | 1.8 |
+| rejectXi | 1 |
+
+### Cuts
+
+| Selection | Type | Value | Comment |
 | --- | --- | --- | --- |
-| always applied | minimal | 0.600000 |  |
-| 1 | minimal | 0.500000 |  |
-| 2 | minimal | 0.250000 |  |
+| Cascade CPA Min | minimal | 0.98 |  |
+| Cascade CPA Min | minimal | 0.9947 |  |
+| Cascade DCA Daughters Max | minimal | 0.600000 |  |
+| Cascade DCA Daughters Max | minimal | 0.500000 |  |
+| Cascade DCA Daughters Max | minimal | 0.250000 |  |
+| Cascade Transverse Radius Min | minimal | 0.800000 |  |
+| Cascade Transverse Radius Min | minimal | 1.100000 |  |
+| Lambda CPA Min | minimal | 0.970000 |  |
+| Lambda CPA Min | minimal | 0.980000 |  |
+| Lambda CPA Min | minimal | 0.987600 |  |
+| Lambda DCA Daughter Max | minimal | 1.000000 |  |
+| Lambda DCA Daughter Max | minimal | 0.600000 |  |
+| Lambda DCA Daughter Max | minimal | 0.500000 |  |
+| Lambda Transverse Radius Min | minimal | 1.400000 |  |
+| Lambda Transverse Radius Min | minimal | 2.500000 |  |
+| Lambda DCA to PV Min | minimal | 0.020000 |  |
+| Lambda DCA to PV Min | minimal | 0.030000 |  |
+| Lambda DCA to PV Min | minimal | 0.040000 |  |
+| Daughter Abs Eta Max | minimal | 0.830000 |  |
+| Daughter Abs Eta Max | minimal | 0.800000 |  |
+| Daughter Abs Eta Max | minimal | 0.770000 |  |
+| Daughter TPC Clusters Min | minimal | 70.000000 |  |
+| Daughter TPC Clusters Min | minimal | 80.000000 |  |
+| Daughter TPC Clusters Min | minimal | 90.000000 |  |
+| Daughter |DCAxy| Min | minimal | 0.040000 |  |
+| Daughter |DCAxy| Min | minimal | 0.050000 |  |
+| Daughter |DCAxy| Min | minimal | 0.060000 |  |
+| Bachelor TPC Kaon PID | minimal | 5.000000 |  |
+| Bachelor TPC Kaon PID | minimal | 4.000000 |  |
+| Bachelor TPC Kaon PID | minimal | 3.000000 |  |
+| Bachelor TOF Kaon PID | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Bachelor TOF Kaon PID | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Bachelor TOF Kaon PID | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Positive Daughter TPC PID | minimal | 5.000000 |  |
+| Positive Daughter TPC PID | minimal | 4.000000 |  |
+| Positive Daughter TPC PID | minimal | 3.000000 |  |
+| Negative Daughter TPC PID | minimal | 5.000000 |  |
+| Negative Daughter TPC PID | minimal | 4.000000 |  |
+| Negative Daughter TPC PID | minimal | 3.000000 |  |
+| Positive Daughter TOF PID | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Positive Daughter TOF PID | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Positive Daughter TOF PID | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
 
-**Cascade Transverse Radius Min**
+## Photon
 
-| Bit | Type | Value | Comment |
+### Prefilters
+
+| Filter | Value |
+| --- | --- |
+| ptMin | 0 |
+| ptMax | 99 |
+| etaMin | -10 |
+| etaMax | 10 |
+| phiMin | 0 |
+| phiMax | 6.28319 |
+| mGammaAbsMax | 1e+10 |
+
+### Cuts
+
+| Selection | Type | Value | Comment |
 | --- | --- | --- | --- |
-| always applied | minimal | 0.800000 |  |
-| 3 | minimal | 1.100000 |  |
-
-**Lambda CPA Min**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.970000 |  |
-| 4 | minimal | 0.980000 |  |
-| 5 | minimal | 0.987600 |  |
-
-**Lambda DCA Daughter Max**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 1.000000 |  |
-| 6 | minimal | 0.600000 |  |
-| 7 | minimal | 0.500000 |  |
-
-**Lambda Transverse Radius Min**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 1.400000 |  |
-| 8 | minimal | 2.500000 |  |
-
-**Lambda DCA to PV Min**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.020000 |  |
-| 9 | minimal | 0.030000 |  |
-| 10 | minimal | 0.040000 |  |
-
-**Daughter Abs Eta Max**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.830000 |  |
-| 11 | minimal | 0.800000 |  |
-| 12 | minimal | 0.770000 |  |
-
-**Daughter TPC Clusters Min**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 70.000000 |  |
-| 13 | minimal | 80.000000 |  |
-| 14 | minimal | 90.000000 |  |
-
-**Daughter |DCAxy| Min**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 0.040000 |  |
-| 15 | minimal | 0.050000 |  |
-| 16 | minimal | 0.060000 |  |
-
-**Bachelor TPC Pion PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 5.000000 |  |
-| 17 | minimal | 4.000000 |  |
-| 18 | minimal | 3.000000 |  |
-
-**Bachelor TOF Pion PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 19 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 20 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 21 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-
-**Positive Daughter TPC PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 5.000000 |  |
-| 22 | minimal | 4.000000 |  |
-| 23 | minimal | 3.000000 |  |
-
-**Negative Daughter TPC PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| always applied | minimal | 5.000000 |  |
-| 24 | minimal | 4.000000 |  |
-| 25 | minimal | 3.000000 |  |
-
-**Positive Daughter TOF PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 26 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 27 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 28 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-
-**Negative Daughter TOF PID**
-
-| Bit | Type | Value | Comment |
-| --- | --- | --- | --- |
-| 29 | neutral | 5.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 30 | neutral | 4.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
-| 31 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
+| Min. CPA (cosine pointing angle) | minimal | 0.850000 |  |
+| Min. CPA (cosine pointing angle) | minimal | 0.900000 |  |
+| Min. CPA (cosine pointing angle) | minimal | 0.950000 |  |
+| Max. |DCAxy| to PV | minimal | 999999995904.000000 |  |
+| Max. |DCAz| to PV | minimal | 999999995904.000000 |  |
+| Max. chi2/NDF of conversion vertex | minimal | 999999995904.000000 |  |
+| Min. transverse radius | minimal | 0.000000 |  |
+| Min. transverse radius | minimal | 5.000000 |  |
+| Min. transverse radius | minimal | 10.000000 |  |
+| Max. transverse radius | minimal | 180.000000 |  |
+| Max. transverse radius | minimal | 160.000000 |  |
+| Max. transverse radius | minimal | 120.000000 |  |
+| Max. absolute pseudorapidity of daughters | minimal | 0.950000 |  |
+| Max. absolute pseudorapidity of daughters | minimal | 0.900000 |  |
+| Max. absolute pseudorapidity of daughters | minimal | 0.850000 |  |
+| TPC electron PID for positive daughter | minimal | 3.500000 | keepDaughtersWithoutTpc = 1 |
+| TPC electron PID for positive daughter | minimal | 3.000000 | keepDaughtersWithoutTpc = 1 |
+| TPC electron PID for positive daughter | minimal | 2.500000 | keepDaughtersWithoutTpc = 1 |
+| TPC electron PID for negative daughter | minimal | 3.500000 | keepDaughtersWithoutTpc = 1 |
+| TPC electron PID for negative daughter | minimal | 3.000000 | keepDaughtersWithoutTpc = 1 |
+| TPC electron PID for negative daughter | minimal | 2.500000 | keepDaughtersWithoutTpc = 1 |

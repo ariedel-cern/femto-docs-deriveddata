@@ -4,10 +4,11 @@
 @brief  Download the output of a Hyperloop train test (full or quick) so that
         generate_cuts_doc.py can turn it into derived-data documentation.
 
-Give it just the train number and it resolves the rest itself: it calls the
-Hyperloop API for the train's "full" test metadata (performance overview:
-reduction factor, PSS memory, throughput, expected resources for the full
-run), and downloads the test's cached output -- AnalysisResults.root,
+Takes a small JSON config file (see configs/*.json for an example) with at
+least a "train_id" field. It resolves the rest itself: calls the Hyperloop
+API for the train's "full" test metadata (performance overview: reduction
+factor, PSS memory, throughput, expected resources for the full run), and
+downloads the test's cached output -- AnalysisResults.root,
 configuration.json, etc. -- from the plain HTTPS directory Hyperloop serves
 it from:
 
@@ -17,13 +18,18 @@ Both the API and the directory require your personal grid certificate as a
 TLS client cert -- the same usercert.pem/userkey.pem used for alien://
 access.
 
-Examples:
+Config file fields:
+    comment              free text, for humans reading the config
+    train_id             the Hyperloop train number (required)
+    output_download_link link to the final merged production output, filled
+                          in by hand once the real (non-test) train has run;
+                          leave null/empty until then -- generate_cuts_doc.py
+                          renders a placeholder in its place
 
-    python3 download_test_output.py 778977 ./train_778977
-    python3 download_test_output.py \\
-        https://alimonitor.cern.ch/hyperloop/train-run/778977/general ./train_778977
-    python3 download_test_output.py \\
-        https://alimonitor.cern.ch/hyperloop/wagon-test/777115 ./wagon_777115
+Example:
+
+    python3 download_test_output.py configs/LHC22o_pass7_minBias.json \\
+        ./output/LHC22o_pass7_minBias
 
 @author Anton Riedel <anton.riedel@cern.ch>, Technical University of Munich
 """
@@ -153,9 +159,17 @@ def download_file(session, base_url, filename, outdir):
     return True
 
 
+def load_config(config_path):
+    with open(config_path) as f:
+        cfg = json.load(f)
+    if not cfg.get("train_id"):
+        raise SystemExit(f"{config_path}: missing required field 'train_id'")
+    return cfg
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("url", help="Train number, or any Hyperloop train-run/wagon-test URL")
+    parser.add_argument("config", help="JSON config file with at least a train_id field (see configs/*.json)")
     parser.add_argument("outdir", help="Directory to download into (created if missing)")
     parser.add_argument("--cert", default=os.path.expanduser("~/.globus/usercert.pem"), help="Grid certificate (default: ~/.globus/usercert.pem)")
     parser.add_argument("--key", default=os.path.expanduser("~/.globus/userkey.pem"), help="Grid certificate key (default: ~/.globus/userkey.pem)")
@@ -167,7 +181,8 @@ def main():
         sys.exit(f"Grid certificate not found: {args.cert} / {args.key}\n"
                   f"Pass --cert/--key if your certificate lives elsewhere.")
 
-    test_id, kind = parse_train_or_test_id(args.url)
+    cfg = load_config(args.config)
+    test_id, kind = parse_train_or_test_id(str(cfg["train_id"]))
     base_url = test_directory_url(test_id)
     os.makedirs(args.outdir, exist_ok=True)
 
@@ -201,7 +216,7 @@ def main():
               "generate_cuts_doc.py needs it.")
 
     provenance = {
-        "source_url": args.url,
+        "config_file": args.config,
         "resolved_id": test_id,
         "resolved_kind": kind,
         "resolved_directory": base_url,

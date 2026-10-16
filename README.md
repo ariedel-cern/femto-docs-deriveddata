@@ -11,27 +11,46 @@ One of three sibling repos:
 ## Generating a production's cuts documentation
 
 `scripts/` contains a two-step pipeline that turns a Hyperloop train test into
-a markdown document listing every configured cut:
+a markdown document listing every configured cut. Each production gets a
+small JSON config in `configs/` (see `configs/LHC22o_pass7_minBias.json`):
+
+```json
+{
+  "comment": "free text, for humans reading the config",
+  "train_id": 778977,
+  "output_download_link": null
+}
+```
+
+`output_download_link` is filled in by hand once the real (non-test)
+production train has finished and the merged derived data has somewhere to
+be downloaded from; until then it stays `null` and the doc shows a
+placeholder.
 
 ```bash
-# 1. just the train number is enough -- it resolves the train's "full" test
-#    itself, pulls the performance overview (reduction factor, PSS memory,
-#    throughput, expected resources for the full run), and downloads
-#    AnalysisResults.root + config files. Needs your grid cert, default
-#    ~/.globus/user{cert,key}.pem. A train-run/wagon-test URL also works.
-python3 scripts/download_test_output.py 778977 ./output/778977
+# 1. resolves the train's "full" test itself, pulls the performance overview
+#    (reduction factor, PSS memory, throughput, expected resources for the
+#    full run), and downloads AnalysisResults.root + config files. Needs
+#    your grid cert, default ~/.globus/user{cert,key}.pem.
+python3 scripts/download_test_output.py \
+    configs/LHC22o_pass7_minBias.json ./output/LHC22o_pass7_minBias
 
 # 2. turn AnalysisResults.root's self-documenting histogram bin labels into
-#    a markdown doc, one section per particle species, with the performance
-#    overview as a header
-python3 scripts/generate_cuts_doc.py ./output/778977
+#    a markdown doc: one merged cuts table per particle species (tracks,
+#    K0short, Lambda, Sigma(+), Xi, Omega, ...; AntiLambda is skipped, same
+#    cuts as Lambda), with the performance overview and config comment/link
+#    as a header.
+python3 scripts/generate_cuts_doc.py \
+    configs/LHC22o_pass7_minBias.json ./output/LHC22o_pass7_minBias
 ```
 
 This reuses the same bin-label format that `cutculator.py`
 (`O2Physics/PWGCF/Femto/Macros/`) parses interactively, but lists every
-configured threshold per selection rather than asking the user to pick one.
-`generate_cuts_doc.py` needs a PyROOT-enabled environment (e.g. an alienv
-O2Physics env); `download_test_output.py` only needs `requests`.
+configured threshold per selection rather than asking the user to pick one
+(bit positions are left out of the table -- they're just the row order
+within each selection). `generate_cuts_doc.py` needs a PyROOT-enabled
+environment (e.g. an alienv O2Physics env); `download_test_output.py` only
+needs `requests`.
 
 ## Status
 

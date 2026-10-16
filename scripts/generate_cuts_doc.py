@@ -10,11 +10,17 @@ interactively (SelectionName/FilterName/BitPosition/.../Comment, parsed with
 the "___"/":::" delimiters), but instead of asking the user to pick one
 threshold per selection, it lists every configured threshold -- i.e. the
 full menu a downstream analysis can choose from -- grouped by species and
-selection.
+selection. Bit positions are omitted from the table (selections are listed
+in ascending bit order, so a downstream user can number them back in).
+
+Takes the same JSON config file as download_test_output.py, so that a
+"comment" and the final "output_download_link" (added by hand once the
+real production train has finished) make it into the doc.
 
 Example:
 
-    python3 generate_cuts_doc.py ./train_778977 --output cuts.md
+    python3 generate_cuts_doc.py configs/LHC22o_pass7_minBias.json \\
+        ./output/LHC22o_pass7_minBias
 
 @author Anton Riedel <anton.riedel@cern.ch>, Technical University of Munich
 """
@@ -32,6 +38,12 @@ VALUE_DELIM = "___"
 SECTION_DELIM = ":::"
 
 SPECIES_RE = re.compile(r"^h(.+?)(Filters|Selection)$")
+
+# Documentation order: tracks, then the particle species roughly in order of
+# decay-topology complexity; cascades (Xi, Omega) last. AntiLambda is
+# excluded -- it is configured with the same cuts as Lambda.
+SPECIES_ORDER = ["Collision", "Track", "K0short", "Lambda", "Sigma", "SigmaPlus", "Xi", "Omega", "Photon"]
+EXCLUDED_SPECIES = {"AntiLambda"}
 
 
 def parse_bin_label(label):
@@ -98,28 +110,26 @@ def render_filters_table(bins):
     return "\n".join(lines)
 
 
-def render_selection_tables(bins):
+def render_selection_table(bins):
+    """One table for every selection of a species, in ascending bit order
+    per selection (so bit positions -- deliberately not shown -- can be
+    numbered back in from row order if ever needed)."""
     groups = {}
     for b in bins:
         sel_name = b.get("SelectionName", "unknown")
         groups.setdefault(sel_name, []).append(b)
 
-    sections = []
+    def sort_key(b):
+        pos = b.get("BitPosition", "X")
+        return (0, -1) if pos.upper() == "X" else (1, int(pos))
+
+    lines = ["| Selection | Type | Value | Comment |", "| --- | --- | --- | --- |"]
     for sel_name, group in groups.items():
-        lines = [f"**{sel_name}**", "", "| Bit | Type | Value | Comment |", "| --- | --- | --- | --- |"]
-
-        def sort_key(b):
-            pos = b.get("BitPosition", "X")
-            return (0, -1) if pos.upper() == "X" else (1, int(pos))
-
         for b in sorted(group, key=sort_key):
-            pos = b.get("BitPosition", "X")
-            bit_label = "always applied" if pos.upper() == "X" else pos
             comment = b.get("Comment", "")
             comment = "" if comment.upper() == "X" else comment
-            lines.append(f"| {bit_label} | {bin_kind(b)} | {b.get('Value', '')} | {comment} |")
-        sections.append("\n".join(lines))
-    return "\n\n".join(sections)
+            lines.append(f"| {sel_name} | {bin_kind(b)} | {b.get('Value', '')} | {comment} |")
+    return "\n".join(lines)
 
 
 def humanize(species_name):
@@ -140,26 +150,27 @@ def render_species(name, hists_by_kind, tdir):
         bins = read_bins(tdir.Get(hists_by_kind["Selection"]))
         if bins:
             parts.append("### Cuts")
-            parts.append(render_selection_tables(bins))
+            parts.append(render_selection_table(bins))
 
     return "\n\n".join(parts)
 
 
-def render_header(outdir):
+def render_header(outdir, doc_config):
     lines = ["# Configured cuts"]
-    source_path = os.path.join(outdir, "SOURCE.json")
-    config_path = os.path.join(outdir, "full_config.json")
 
-    if os.path.exists(source_path):
-        with open(source_path) as f:
-            source = json.load(f)
-        url = source["source_url"]
-        shown = f"[{url}]({url})" if url.startswith("http") else url
-        lines.append(f"\nSource: {shown} (resolved {source['resolved_kind']} id {source['resolved_id']}, "
-                     f"[test output]({source['resolved_directory']}))")
+    comment = doc_config.get("comment")
+    if comment:
+        lines.append(f"\n> {comment}")
 
-    if os.path.exists(config_path):
-        with open(config_path) as f:
+    output_link = doc_config.get("output_download_link")
+    if output_link:
+        lines.append(f"\n**Download the derived data:** [{output_link}]({output_link})")
+    else:
+        lines.append("\n**Download the derived data:** _pending -- added once the production train completes_")
+
+    full_config_path = os.path.join(outdir, "full_config.json")
+    if os.path.exists(full_config_path):
+        with open(full_config_path) as f:
             cfg = json.load(f)
         lines.append("")
         lines.append("| | |")
@@ -195,13 +206,24 @@ def render_header(outdir):
     return "\n".join(lines)
 
 
+def ordered_species_names(species):
+    names = [n for n in species if n not in EXCLUDED_SPECIES]
+    known = [n for n in SPECIES_ORDER if n in names]
+    unknown = sorted(n for n in names if n not in SPECIES_ORDER)
+    return known + unknown
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("config", help="JSON config file with comment/output_download_link (see configs/*.json)")
     parser.add_argument("outdir", help="Directory produced by download_test_output.py")
     parser.add_argument("--rootfile", default="AnalysisResults.root", help="ROOT file name inside outdir")
     parser.add_argument("--dir", default="femto-producer", help="TDirectory in the ROOT file to document")
     parser.add_argument("--output", default=None, help="Output markdown file (default: <outdir>/cuts.md)")
     args = parser.parse_args()
+
+    with open(args.config) as f:
+        doc_config = json.load(f)
 
     rootfile_path = os.path.join(args.outdir, args.rootfile)
     f = ROOT.TFile.Open(rootfile_path)
@@ -216,15 +238,16 @@ def main():
     if not species:
         raise SystemExit(f"No h<Species>Filters/h<Species>Selection histograms found in '{args.dir}'")
 
-    doc = [render_header(args.outdir)]
-    for name in sorted(species):
+    doc = [render_header(args.outdir, doc_config)]
+    names = ordered_species_names(species)
+    for name in names:
         doc.append(render_species(name, species[name], tdir))
 
     output_path = args.output or os.path.join(args.outdir, "cuts.md")
     with open(output_path, "w") as out:
         out.write("\n\n".join(doc) + "\n")
 
-    print(f"Wrote {output_path} ({len(species)} species)")
+    print(f"Wrote {output_path} ({len(names)} species)")
 
 
 if __name__ == "__main__":
