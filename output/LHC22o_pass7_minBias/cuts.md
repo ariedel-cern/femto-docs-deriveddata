@@ -1,6 +1,6 @@
-# Configured cuts
+# LHC22o_pass7_minBias femto producer cuts
 
-**Download the derived data:** _pending -- added once the production train completes_
+**AnalysisResults.root for cutculator.py:** _pending -- added once the production train completes_
 
 | | |
 | --- | --- |
@@ -61,6 +61,8 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 | Minimum Sphericity | 13 | minimal | 0.700000 |  |
 
 ## Track
+
+> Lower pT cut in prefilter of 0.136 necessary for ordering of DCA cuts.
 
 ### Prefilters
 
@@ -148,6 +150,8 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 
 ## K0short
 
+> Lambda rejection via prefilter, cannot be changed during analysis.
+
 ### Prefilters
 
 | Filter | Value |
@@ -200,6 +204,8 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 | TOF Pion PID for negative daughter | 18 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
 
 ## Lambda
+
+> K0short rejection via prefilter, cannot be changed during analysis.
 
 ### Prefilters
 
@@ -354,6 +360,8 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 
 ## Xi
 
+> No Omega rejection.
+
 ### Prefilters
 
 | Filter | Value |
@@ -424,6 +432,8 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 | Negative Daughter TOF PID | 31 | neutral | 3.000000 | requireTof = 0; keepTracksWithoutTof = 1 |
 
 ## Omega
+
+> Xi rejection via prefilter, cannot be changed during analysis.
 
 ### Prefilters
 

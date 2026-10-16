@@ -20,15 +20,18 @@ access.
 
 Config file fields (only train_id is used here; the rest are read by
 generate_cuts_doc.py):
-    comment              free text, for humans reading the config
-    train_id             the Hyperloop train number (required)
-    output_download_link link to the final merged production output, filled
-                          in by hand once the real (non-test) train has run;
-                          leave null/empty until then -- generate_cuts_doc.py
-                          renders a placeholder in its place
-    species_comments     optional {species name: comment} map, rendered
-                          under that species' heading; empty or missing
-                          entries are skipped
+    title                 doc title (H1); falls back to "Configured cuts"
+    comment                free text, for humans reading the config
+    train_id               the Hyperloop train number (required)
+    cutculator_input_link  link to an AnalysisResults.root from the real
+                            (non-test) production train, for analysers to
+                            feed into cutculator.py themselves; filled in
+                            by hand once that train has run -- leave
+                            null/empty until then, generate_cuts_doc.py
+                            renders a placeholder in its place
+    species_comments       optional {species name: comment} map, rendered
+                            under that species' heading; empty or missing
+                            entries are skipped
 
 Example:
 

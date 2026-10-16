@@ -1,15 +1,16 @@
 {
+  "title": "LHC22o_pass7_minBias femto producer cuts",
   "comment": "",
   "train_id": 782224,
-  "output_download_link": null,
+  "cutculator_input_link": null,
   "species_comments": {
-    "Track": "",
-    "K0short": "",
-    "Lambda": "",
+    "Track": "Lower pT cut in prefilter of 0.136 necessary for ordering of DCA cuts.",
+    "K0short": "Lambda rejection via prefilter, cannot be changed during analysis.",
+    "Lambda": "K0short rejection via prefilter, cannot be changed during analysis.",
     "Sigma": "",
     "SigmaPlus": "",
-    "Xi": "",
-    "Omega": "",
+    "Xi": "No Omega rejection.",
+    "Omega": "Xi rejection via prefilter, cannot be changed during analysis.",
     "Photon": "",
     "Collision": "RCT flags are checked implicitly and Sel8 is an optional cut. Please make sure to check that NOT using Sel8 does not change your physics signal."
   }

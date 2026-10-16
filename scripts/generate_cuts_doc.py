@@ -15,10 +15,12 @@ always-enforced floor (no bit) can be told apart from their selectable
 tightenings (bit N).
 
 Takes the same JSON config file as download_test_output.py, so that the
-general "comment", the final "output_download_link" (added by hand once
-the real production train has finished), and any per-species comments
-("species_comments": {species name: comment}) make it into the doc. A
-comment that is empty or whose key is missing is simply skipped.
+"title", general "comment", the "cutculator_input_link" (a link to an
+AnalysisResults.root from the real production train, for analysers to feed
+into cutculator.py themselves -- added by hand once that train has
+finished), and any per-species comments ("species_comments": {species
+name: comment}) make it into the doc. A comment that is empty or whose key
+is missing is simply skipped.
 
 Example:
 
@@ -165,17 +167,17 @@ def render_species(name, hists_by_kind, tdir, comment=None):
 
 
 def render_header(outdir, doc_config):
-    lines = ["# Configured cuts"]
+    lines = [f"# {doc_config.get('title') or 'Configured cuts'}"]
 
     comment = doc_config.get("comment")
     if comment:
         lines.append(f"\n> {comment}")
 
-    output_link = doc_config.get("output_download_link")
-    if output_link:
-        lines.append(f"\n**Download the derived data:** [{output_link}]({output_link})")
+    cutculator_link = doc_config.get("cutculator_input_link")
+    if cutculator_link:
+        lines.append(f"\n**AnalysisResults.root for cutculator.py:** [{cutculator_link}]({cutculator_link})")
     else:
-        lines.append("\n**Download the derived data:** _pending -- added once the production train completes_")
+        lines.append("\n**AnalysisResults.root for cutculator.py:** _pending -- added once the production train completes_")
 
     full_config_path = os.path.join(outdir, "full_config.json")
     if os.path.exists(full_config_path):

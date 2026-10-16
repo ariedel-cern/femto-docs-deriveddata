@@ -16,20 +16,22 @@ small JSON config in `configs/` (see `configs/LHC22o_pass7_minBias.json`):
 
 ```json
 {
+  "title": "doc title (H1); falls back to \"Configured cuts\"",
   "comment": "free text, for humans reading the config",
   "train_id": 778977,
-  "output_download_link": null,
+  "cutculator_input_link": null,
   "species_comments": {
     "Track": "optional, rendered under that species' heading"
   }
 }
 ```
 
-`output_download_link` is filled in by hand once the real (non-test)
-production train has finished and the merged derived data has somewhere to
-be downloaded from; until then it stays `null` and the doc shows a
-placeholder. Both `comment` and any entry in `species_comments` are skipped
-entirely in the doc if empty or missing.
+`cutculator_input_link` points at an `AnalysisResults.root` from the real
+(non-test) production train, for analysers to feed into `cutculator.py`
+themselves -- it's filled in by hand once that train has run and the file
+has somewhere to be downloaded from; until then it stays `null` and the doc
+shows a placeholder. Both `comment` and any entry in `species_comments` are
+skipped entirely in the doc if empty or missing.
 
 ```bash
 # 1. resolves the train's "full" test itself, pulls the performance overview
