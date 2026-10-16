@@ -1,0 +1,21 @@
+name: Sync gist
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - output/LHC22o_pass7_minBias/cuts.md
+
+jobs:
+  sync-gist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Push cuts.md content to gist
+        env:
+          GH_TOKEN: ${{ secrets.GIST_TOKEN }}
+          GIST_ID: 56975617144260b07692a8adcf3df2c1
+        run: |
+          gh api -X PATCH "gists/${GIST_ID}" \
+            -f "files[cuts.md][content]=$(cat output/LHC22o_pass7_minBias/cuts.md)"
