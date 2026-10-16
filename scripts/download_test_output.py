@@ -5,19 +5,18 @@
         generate_cuts_doc.py can turn it into derived-data documentation.
 
 Takes a small JSON config file (see configs/*.json for an example) with at
-least a "production_train_id" field. Everything else is resolved via the
-Hyperloop API: it fetches that train's own "full" test metadata
-(performance overview: reduction factor, PSS memory, throughput, expected
-resources for the full run), which also tells us whether this train was
-composed from a smaller "short" validation train -- visible on the
-Hyperloop train-run page as the train it's "based on" -- via its
-short_train_id field. Not every production train has one (some run
-straight on the full dataset with no smaller validation step first); the
-field is simply absent/null when there isn't one. When there is one, its
-own performance numbers are pulled too and saved alongside the production
-train's, as the "projected from test" figures in performance.json --
-generally the more representative estimate, since it's a separate,
-smaller-scale run rather than just the production train's own sanity test.
+least a "production_train_id" field. The rest is resolved via the
+Hyperloop API: it checks that train's own metadata for a short_train_id --
+whether this train was composed from a smaller "short" validation train,
+visible on the Hyperloop train-run page as the train it's "based on". Not
+every production train has one (some run straight on the full dataset
+with no smaller validation step first); the field is simply absent/null
+when there isn't one.
+
+Grid statistics (job/merge success rate, final output size, reduction
+factor, throughput) are deliberately not pulled here -- they're already on
+the Hyperloop train-run page linked from the doc, so duplicating them would
+just go stale.
 
 AnalysisResults.root/configuration.json/etc. are then downloaded from
 whichever train actually holds them: the short train's own test if the
@@ -67,13 +66,7 @@ import json
 import os
 import sys
 
-from hyperloop_common import (
-    API_BASE,
-    human_bytes,
-    human_seconds,
-    make_session,
-    test_directory_url,
-)
+from hyperloop_common import API_BASE, make_session, test_directory_url
 
 # Always small and always useful for documentation / provenance.
 DEFAULT_FILES = [
@@ -92,8 +85,8 @@ AOD_FILE = "AO2D.root"
 
 def fetch_train_metadata(session, train_id):
     """Pull the same JSON the Hyperloop train-run/general page is built
-    from: performance numbers, and -- if this train was composed from a
-    smaller validation train -- its short_train_id."""
+    from, just to read short_train_id -- whether this train was composed
+    from a smaller validation train."""
     resp = session.get(f"{API_BASE}/trains/train.jsp", params={"train_id": train_id, "type": "full"}, timeout=60)
     if resp.status_code != 200:
         print(f"  warning: could not fetch train metadata (HTTP {resp.status_code})")
@@ -103,69 +96,6 @@ def fetch_train_metadata(session, train_id):
     except ValueError:
         print("  warning: train metadata response was not JSON")
         return None
-
-
-def compute_performance(meta):
-    """Reconstruct the "performance overview" numbers Hyperloop shows for a
-    test: reduction factor, PSS memory, throughput, and the resources/output
-    size expected if the same ratios hold for the full dataset.
-
-    - reduction factor: input size / AO2D output size of *this test*.
-    - throughput: input size / wall time / cpu cores (this test).
-    - expected resources: extrapolating this test's throughput to the full
-      dataset size gives the core-seconds the full train run would need.
-    - expected output size: extrapolating this test's reduction factor to
-      the full dataset size gives the projected total AO2D size.
-    """
-    input_size = meta.get("input_size")
-    output_size = meta.get("output_size")
-    derived_output_size = meta.get("derived_output_size") or output_size
-    wall_time = meta.get("wall_time")
-    cpu_cores = meta.get("cpu_cores") or 1
-    dataset_size = meta.get("dataset_size_with_parents") or meta.get("dataset_size")
-
-    perf = {
-        "mem_pss_avg_bytes": meta.get("mem_pss"),
-        "mem_pss_max_bytes": meta.get("mem_pss_max"),
-    }
-
-    reduction_factor = None
-    if input_size and derived_output_size:
-        reduction_factor = input_size / derived_output_size
-        perf["reduction_factor"] = reduction_factor
-
-    if input_size and wall_time:
-        perf["throughput_bytes_per_sec_per_core"] = input_size / wall_time / cpu_cores
-
-    if dataset_size and reduction_factor:
-        perf["expected_output_size_bytes"] = dataset_size / reduction_factor
-
-    if dataset_size and input_size and wall_time:
-        perf["expected_resources_core_seconds"] = dataset_size * wall_time * cpu_cores / input_size
-
-    perf["_raw"] = {
-        k: meta.get(k)
-        for k in (
-            "input_size", "output_size", "derived_output_size", "wall_time", "cpu_time",
-            "cpu_cores", "dataset_size", "dataset_size_with_parents", "dataset_size_without_parents",
-            "mem_pss", "mem_pss_max", "package_tag", "dataset_name",
-        )
-    }
-    return perf
-
-
-def print_performance(label, perf):
-    print(f"\n{label}:")
-    if "reduction_factor" in perf:
-        print(f"  Reduction factor:   {perf['reduction_factor']:.1f}x")
-    if "mem_pss_avg_bytes" in perf and perf["mem_pss_avg_bytes"] is not None:
-        print(f"  PSS memory:         avg {human_bytes(perf['mem_pss_avg_bytes'])}, max {human_bytes(perf.get('mem_pss_max_bytes'))}")
-    if "throughput_bytes_per_sec_per_core" in perf:
-        print(f"  Throughput:         {human_bytes(perf['throughput_bytes_per_sec_per_core'])}/s per core")
-    if "expected_resources_core_seconds" in perf:
-        print(f"  Expected resources: {human_seconds(perf['expected_resources_core_seconds'])} (core-time) for the full run")
-    if "expected_output_size_bytes" in perf:
-        print(f"  Expected output:    {human_bytes(perf['expected_output_size_bytes'])} for the full run")
 
 
 def download_file(session, base_url, filename, outdir):
@@ -212,41 +142,22 @@ def main():
     print(f"Production train {production_train_id}")
 
     session = make_session(args.cert, args.key)
-    meta = fetch_train_metadata(session, production_train_id)
 
     explicit_test_train_id = cfg.get("test_train_id")
     if explicit_test_train_id:
         input_train_id = int(explicit_test_train_id)
         print(f"Using explicit test_train_id {input_train_id} from the config")
-    elif meta and meta.get("short_train_id"):
-        input_train_id = int(meta["short_train_id"])
-        print(f"Based on short (validation) train {input_train_id}")
     else:
-        input_train_id = production_train_id
-        print("No short/base train -- using the production train's own test output")
+        meta = fetch_train_metadata(session, production_train_id)
+        if meta and meta.get("short_train_id"):
+            input_train_id = int(meta["short_train_id"])
+            print(f"Based on short (validation) train {input_train_id}")
+        else:
+            input_train_id = production_train_id
+            print("No short/base train -- using the production train's own test output")
 
     base_url = test_directory_url(input_train_id)
     print(f"Downloading from {base_url}")
-
-    # "full_train" is the production train's own numbers (always); "test"
-    # is the smaller train we actually pulled AnalysisResults.root from,
-    # when that's a different train -- its ratios projected onto the full
-    # dataset are normally the more representative estimate.
-    test_meta = meta if input_train_id == production_train_id else fetch_train_metadata(session, input_train_id)
-
-    performance = {}
-    if meta:
-        with open(os.path.join(args.outdir, "train_meta.json"), "w") as f:
-            json.dump(meta, f, indent=2)
-        performance["full_train"] = compute_performance(meta)
-        print_performance("Full train", performance["full_train"])
-    if test_meta and input_train_id != production_train_id:
-        performance["test"] = compute_performance(test_meta)
-        print_performance("Projected from test", performance["test"])
-
-    if performance:
-        with open(os.path.join(args.outdir, "performance.json"), "w") as f:
-            json.dump(performance, f, indent=2)
 
     files = args.only if args.only else list(DEFAULT_FILES)
     if args.with_aod and AOD_FILE not in files:

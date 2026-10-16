@@ -530,27 +530,3 @@
 | TPC electron PID for negative daughter | always applied | minimal | 3.500000 | keepDaughtersWithoutTpc = 1 |
 | TPC electron PID for negative daughter | 10 | minimal | 3.000000 | keepDaughtersWithoutTpc = 1 |
 | TPC electron PID for negative daughter | 11 | minimal | 2.500000 | keepDaughtersWithoutTpc = 1 |
-
-## Performance overview
-
-"Expected" rows extrapolate the measured ratios to the full dataset.
-
-### Projected from test
-
-| | |
-| --- | --- |
-| Reduction factor | 87.5x |
-| PSS memory | avg 4.0 GB, max 4.2 GB |
-| Throughput | 3.1 MB/s per core |
-| Expected resources (full run) | 62d 7h 5m 35s core-time |
-| Expected output size (full run) | 183.8 GB |
-
-### Full train
-
-| | |
-| --- | --- |
-| Reduction factor | 94.4x |
-| PSS memory | avg 4.2 GB, max 4.7 GB |
-| Throughput | 3.6 MB/s per core |
-| Expected resources (full run) | 1012d 8h 14m 50s core-time |
-| Expected output size (full run) | 3.2 TB |

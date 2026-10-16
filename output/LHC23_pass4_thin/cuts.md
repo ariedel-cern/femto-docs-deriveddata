@@ -489,27 +489,3 @@
 | Positive Daughter TOF PID | 26 | neutral | 5.000000 | passes if daughter has no TOF; else nSigmaTOF computed with corrected time |
 | Positive Daughter TOF PID | 27 | neutral | 4.000000 | passes if daughter has no TOF; else nSigmaTOF computed with corrected time |
 | Positive Daughter TOF PID | 28 | neutral | 3.000000 | passes if daughter has no TOF; else nSigmaTOF computed with corrected time |
-
-## Performance overview
-
-"Expected" rows extrapolate the measured ratios to the full dataset.
-
-### Projected from test
-
-| | |
-| --- | --- |
-| Reduction factor | 118.4x |
-| PSS memory | avg 2.1 GB, max 2.3 GB |
-| Throughput | 5.0 MB/s per core |
-| Expected resources (full run) | 71d 17h 53m 16s core-time |
-| Expected output size (full run) | 256.7 GB |
-
-### Full train
-
-| | |
-| --- | --- |
-| Reduction factor | 117.6x |
-| PSS memory | avg 2.4 GB, max 2.6 GB |
-| Throughput | 10.2 MB/s per core |
-| Expected resources (full run) | 1886d 9h 56m 25s core-time |
-| Expected output size (full run) | 13.5 TB |

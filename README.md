@@ -49,18 +49,18 @@ link after the derived data has been produced -- and until then stay
 `species_comments` are skipped if empty or missing.
 
 ```bash
-# 1. resolves the train's "full" test itself, pulls the performance overview
-#    (reduction factor, PSS memory, throughput, expected resources for the
-#    full run), and downloads AnalysisResults.root + config files. Needs
-#    your grid cert, default ~/.globus/user{cert,key}.pem.
+# 1. resolves which train to pull from (see below), and downloads
+#    AnalysisResults.root + config files. Needs your grid cert, default
+#    ~/.globus/user{cert,key}.pem.
 python3 scripts/download_test_output.py \
     configs/LHC22o_pass7_minBias.json ./output/LHC22o_pass7_minBias
 
 # 2. turn AnalysisResults.root's self-documenting histogram bin labels into
-#    a markdown doc: one merged cuts table per particle species (tracks,
-#    K0short, Lambda, Sigma(+), Xi, Omega, ...; AntiLambda is skipped, same
-#    cuts as Lambda), links/comment/software-tag as a header, and the
-#    performance overview at the very end (analysers don't need it).
+#    a markdown doc: links/comment/software-tag as a header, then one
+#    merged cuts table per particle species (tracks, K0short, Lambda,
+#    Sigma(+), Xi, Omega, ...; AntiLambda is skipped, same cuts as Lambda).
+#    Grid statistics aren't duplicated here -- see the linked train-run
+#    page for those.
 python3 scripts/generate_cuts_doc.py \
     configs/LHC22o_pass7_minBias.json ./output/LHC22o_pass7_minBias
 ```

@@ -37,30 +37,3 @@ def make_session(cert, key):
     session.verify = False
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     return session
-
-
-def human_bytes(n):
-    if n is None:
-        return "?"
-    n = float(n)
-    sign = "-" if n < 0 else ""
-    n = abs(n)
-    for unit in ("B", "KB", "MB", "GB", "TB", "PB"):
-        if n < 1024:
-            return f"{sign}{n:.1f} {unit}"
-        n /= 1024
-    return f"{sign}{n:.1f} EB"
-
-
-def human_seconds(n):
-    if n is None:
-        return "?"
-    n = float(n)
-    units = (("d", 86400), ("h", 3600), ("m", 60), ("s", 1))
-    parts = []
-    for name, size in units:
-        if n >= size:
-            value = int(n // size)
-            n -= value * size
-            parts.append(f"{value}{name}")
-    return " ".join(parts) if parts else "0s"

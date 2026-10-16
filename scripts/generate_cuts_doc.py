@@ -25,8 +25,9 @@ the "hyperloop_dataset_link" (the Hyperloop dataset for the derived data,
 from operators) -- the latter two added by hand once available -- and any
 per-species comments ("species_comments": {species name: comment}) make
 it into the doc. A comment that is empty or whose key is missing is
-simply skipped. The performance overview (not needed by analysers reading
-the cuts) is rendered last, after all species.
+simply skipped. Grid statistics (job success rate, output size, reduction
+factor, throughput) are deliberately not duplicated here -- they're
+already on the linked Hyperloop train-run page.
 
 Example:
 
@@ -43,7 +44,7 @@ import re
 
 import ROOT  # pylint: disable=import-error
 
-from hyperloop_common import human_bytes, human_seconds, train_run_url
+from hyperloop_common import train_run_url
 
 VALUE_DELIM = "___"
 SECTION_DELIM = ":::"
@@ -252,47 +253,6 @@ def render_header(outdir, doc_config):
     return "\n".join(lines)
 
 
-def render_performance_table(perf):
-    lines = ["| | |", "| --- | --- |"]
-    if "reduction_factor" in perf:
-        lines.append(f"| Reduction factor | {perf['reduction_factor']:.1f}x |")
-    if perf.get("mem_pss_avg_bytes") is not None:
-        lines.append(f"| PSS memory | avg {human_bytes(perf['mem_pss_avg_bytes'])}, max {human_bytes(perf.get('mem_pss_max_bytes'))} |")
-    if "throughput_bytes_per_sec_per_core" in perf:
-        lines.append(f"| Throughput | {human_bytes(perf['throughput_bytes_per_sec_per_core'])}/s per core |")
-    if "expected_resources_core_seconds" in perf:
-        lines.append(f"| Expected resources (full run) | {human_seconds(perf['expected_resources_core_seconds'])} core-time |")
-    if "expected_output_size_bytes" in perf:
-        lines.append(f"| Expected output size (full run) | {human_bytes(perf['expected_output_size_bytes'])} |")
-    return "\n".join(lines)
-
-
-def render_performance(outdir):
-    """Rendered at the very end of the doc -- it's operational information
-    about the test run, not something an analyser needs to read the cuts.
-    Shows the projection from the (smaller) test train first, if there is
-    one, then the production train's own numbers."""
-    perf_path = os.path.join(outdir, "performance.json")
-    if not os.path.exists(perf_path):
-        return None
-
-    with open(perf_path) as f:
-        performance = json.load(f)
-
-    sections = [
-        "## Performance overview",
-        "\"Expected\" rows extrapolate the measured ratios to the full dataset.",
-    ]
-    if performance.get("test"):
-        sections.append("### Projected from test")
-        sections.append(render_performance_table(performance["test"]))
-    if performance.get("full_train"):
-        sections.append("### Full train")
-        sections.append(render_performance_table(performance["full_train"]))
-
-    return "\n\n".join(sections)
-
-
 def ordered_species_names(species):
     names = [n for n in species if n not in EXCLUDED_SPECIES]
     known = [n for n in SPECIES_ORDER if n in names]
@@ -331,10 +291,6 @@ def main():
     names = ordered_species_names(species)
     for name in names:
         doc.append(render_species(name, species[name], tdir, species_comments.get(name)))
-
-    performance = render_performance(args.outdir)
-    if performance:
-        doc.append(performance)
 
     output_path = args.output or os.path.join(args.outdir, "cuts.md")
     with open(output_path, "w") as out:
