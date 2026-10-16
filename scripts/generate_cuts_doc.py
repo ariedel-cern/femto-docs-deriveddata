@@ -94,17 +94,17 @@ def humanize_comment(raw):
 
     notes = []
     for key in [k for k in parts if k.lower().startswith("minmomtof")]:
-        notes.append(f"TOF required above {float(parts.pop(key)):g} GeV/c")
+        notes.append(f"TOF mandatory above {float(parts.pop(key)):g} GeV/c")
 
     if "requireTof" in parts and "keepTracksWithoutTof" in parts:
         require_tof = parts.pop("requireTof")
         keep_without_tof = parts.pop("keepTracksWithoutTof")
         if require_tof == "1":
-            notes.append("TOF required")
+            notes.append("TOF mandatory")
         elif keep_without_tof == "1":
-            notes.append("passes if daughter has no TOF; else cut uses corrected TOF time")
+            notes.append("passes if daughter has no TOF; else nSigmaTOF computed with corrected time")
         else:
-            notes.append("rejected if daughter has no TOF; cut uses corrected TOF time when present")
+            notes.append("rejected if daughter has no TOF; else nSigmaTOF computed with corrected time")
 
     notes.extend(f"{k} = {v}" for k, v in parts.items())
     return "; ".join(notes)
