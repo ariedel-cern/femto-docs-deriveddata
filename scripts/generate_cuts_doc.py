@@ -17,10 +17,12 @@ tightenings (bit N).
 Takes the same JSON config file as download_test_output.py, so that the
 "title", general "comment", the "cutculator_input_link" (a link to an
 AnalysisResults.root from the real production train, for analysers to feed
-into cutculator.py themselves -- added by hand once that train has
-finished), and any per-species comments ("species_comments": {species
-name: comment}) make it into the doc. A comment that is empty or whose key
-is missing is simply skipped.
+into cutculator.py themselves), the "hyperloop_dataset_link" (the
+Hyperloop dataset for the derived data, from operators) -- both added by
+hand once available -- and any per-species comments ("species_comments":
+{species name: comment}) make it into the doc. A comment that is empty or
+whose key is missing is simply skipped. The performance overview (not
+needed by analysers reading the cuts) is rendered last, after all species.
 
 Example:
 
@@ -179,6 +181,12 @@ def render_header(outdir, doc_config):
     else:
         lines.append("\n**AnalysisResults.root for cutculator.py:** _pending -- added once the production train completes_")
 
+    dataset_link = doc_config.get("hyperloop_dataset_link")
+    if dataset_link:
+        lines.append(f"\n**Hyperloop dataset:** [{dataset_link}]({dataset_link})")
+    else:
+        lines.append("\n**Hyperloop dataset:** _pending -- added once the derived data has been produced_")
+
     full_config_path = os.path.join(outdir, "full_config.json")
     if os.path.exists(full_config_path):
         with open(full_config_path) as f:
@@ -192,27 +200,37 @@ def render_header(outdir, doc_config):
         if inputdata:
             lines.append(f"| Input data | {inputdata[0]}{' + ' + str(len(inputdata) - 1) + ' more' if len(inputdata) > 1 else ''} |")
 
+    return "\n".join(lines)
+
+
+def render_performance(outdir):
+    """Rendered at the very end of the doc -- it's operational information
+    about the test run, not something an analyser needs to read the cuts."""
     perf_path = os.path.join(outdir, "performance.json")
-    if os.path.exists(perf_path):
-        with open(perf_path) as f:
-            perf = json.load(f)
-        lines.append("")
-        lines.append("## Performance overview")
-        lines.append("")
-        lines.append("Measured on this test; \"expected\" rows extrapolate this test's ratios to the full dataset.")
-        lines.append("")
-        lines.append("| | |")
-        lines.append("| --- | --- |")
-        if "reduction_factor" in perf:
-            lines.append(f"| Reduction factor | {perf['reduction_factor']:.1f}x |")
-        if perf.get("mem_pss_avg_bytes") is not None:
-            lines.append(f"| PSS memory | avg {human_bytes(perf['mem_pss_avg_bytes'])}, max {human_bytes(perf.get('mem_pss_max_bytes'))} |")
-        if "throughput_bytes_per_sec_per_core" in perf:
-            lines.append(f"| Throughput | {human_bytes(perf['throughput_bytes_per_sec_per_core'])}/s per core |")
-        if "expected_resources_core_seconds" in perf:
-            lines.append(f"| Expected resources (full run) | {human_seconds(perf['expected_resources_core_seconds'])} core-time |")
-        if "expected_output_size_bytes" in perf:
-            lines.append(f"| Expected output size (full run) | {human_bytes(perf['expected_output_size_bytes'])} |")
+    if not os.path.exists(perf_path):
+        return None
+
+    with open(perf_path) as f:
+        perf = json.load(f)
+
+    lines = [
+        "## Performance overview",
+        "",
+        "Measured on this test; \"expected\" rows extrapolate this test's ratios to the full dataset.",
+        "",
+        "| | |",
+        "| --- | --- |",
+    ]
+    if "reduction_factor" in perf:
+        lines.append(f"| Reduction factor | {perf['reduction_factor']:.1f}x |")
+    if perf.get("mem_pss_avg_bytes") is not None:
+        lines.append(f"| PSS memory | avg {human_bytes(perf['mem_pss_avg_bytes'])}, max {human_bytes(perf.get('mem_pss_max_bytes'))} |")
+    if "throughput_bytes_per_sec_per_core" in perf:
+        lines.append(f"| Throughput | {human_bytes(perf['throughput_bytes_per_sec_per_core'])}/s per core |")
+    if "expected_resources_core_seconds" in perf:
+        lines.append(f"| Expected resources (full run) | {human_seconds(perf['expected_resources_core_seconds'])} core-time |")
+    if "expected_output_size_bytes" in perf:
+        lines.append(f"| Expected output size (full run) | {human_bytes(perf['expected_output_size_bytes'])} |")
 
     return "\n".join(lines)
 
@@ -255,6 +273,10 @@ def main():
     names = ordered_species_names(species)
     for name in names:
         doc.append(render_species(name, species[name], tdir, species_comments.get(name)))
+
+    performance = render_performance(args.outdir)
+    if performance:
+        doc.append(performance)
 
     output_path = args.output or os.path.join(args.outdir, "cuts.md")
     with open(output_path, "w") as out:

@@ -2,23 +2,13 @@
 
 **AnalysisResults.root for cutculator.py:** _pending -- added once the production train completes_
 
+**Hyperloop dataset:** _pending -- added once the derived data has been produced_
+
 | | |
 | --- | --- |
 | Package tag | VO_ALICE@O2Physics::daily-20261008-0000-1 |
 | Production type | DATA |
 | Input data | /alice/data/2022/LHC22o/527041/apass7/0500 + 1 more |
-
-## Performance overview
-
-Measured on this test; "expected" rows extrapolate this test's ratios to the full dataset.
-
-| | |
-| --- | --- |
-| Reduction factor | 94.4x |
-| PSS memory | avg 4.2 GB, max 4.7 GB |
-| Throughput | 3.6 MB/s per core |
-| Expected resources (full run) | 1012d 8h 14m 50s core-time |
-| Expected output size (full run) | 3.2 TB |
 
 ## Collision
 
@@ -540,3 +530,15 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 | TPC electron PID for negative daughter | always applied | minimal | 3.500000 | keepDaughtersWithoutTpc = 1 |
 | TPC electron PID for negative daughter | 10 | minimal | 3.000000 | keepDaughtersWithoutTpc = 1 |
 | TPC electron PID for negative daughter | 11 | minimal | 2.500000 | keepDaughtersWithoutTpc = 1 |
+
+## Performance overview
+
+Measured on this test; "expected" rows extrapolate this test's ratios to the full dataset.
+
+| | |
+| --- | --- |
+| Reduction factor | 94.4x |
+| PSS memory | avg 4.2 GB, max 4.7 GB |
+| Throughput | 3.6 MB/s per core |
+| Expected resources (full run) | 1012d 8h 14m 50s core-time |
+| Expected output size (full run) | 3.2 TB |

@@ -29,6 +29,10 @@ generate_cuts_doc.py):
                             by hand once that train has run -- leave
                             null/empty until then, generate_cuts_doc.py
                             renders a placeholder in its place
+    hyperloop_dataset_link link to the Hyperloop dataset for the derived
+                            data, filled in by hand once operators provide
+                            it after the derived data has been produced;
+                            same null/placeholder behaviour
     species_comments       optional {species name: comment} map, rendered
                             under that species' heading; empty or missing
                             entries are skipped

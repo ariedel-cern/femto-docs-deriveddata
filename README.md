@@ -20,6 +20,7 @@ small JSON config in `configs/` (see `configs/LHC22o_pass7_minBias.json`):
   "comment": "free text, for humans reading the config",
   "train_id": 778977,
   "cutculator_input_link": null,
+  "hyperloop_dataset_link": null,
   "species_comments": {
     "Track": "optional, rendered under that species' heading"
   }
@@ -28,10 +29,12 @@ small JSON config in `configs/` (see `configs/LHC22o_pass7_minBias.json`):
 
 `cutculator_input_link` points at an `AnalysisResults.root` from the real
 (non-test) production train, for analysers to feed into `cutculator.py`
-themselves -- it's filled in by hand once that train has run and the file
-has somewhere to be downloaded from; until then it stays `null` and the doc
-shows a placeholder. Both `comment` and any entry in `species_comments` are
-skipped entirely in the doc if empty or missing.
+themselves. `hyperloop_dataset_link` points at the Hyperloop dataset for
+the derived data. Both are filled in by hand once available -- the first
+once the real train has run, the second once operators hand over the
+dataset link after the derived data has been produced -- and until then
+stay `null`, showing a placeholder. `comment` and any entry in
+`species_comments` are skipped entirely in the doc if empty or missing.
 
 ```bash
 # 1. resolves the train's "full" test itself, pulls the performance overview
