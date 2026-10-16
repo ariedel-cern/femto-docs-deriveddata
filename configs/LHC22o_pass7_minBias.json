@@ -1,9 +1,9 @@
 {
-  "comment": "Femto producer cuts for the GP derived-data train, wagon AAA_FemtoProducer_GP_Derived_22_24_v3",
-  "train_id": 778977,
+  "comment": "",
+  "train_id": 782224,
   "output_download_link": null,
   "species_comments": {
-    "Track": "Only the minimal cuts matter here; PID bits are left loose on purpose.",
+    "Track": "",
     "K0short": "",
     "Lambda": "",
     "Sigma": "",
@@ -11,6 +11,6 @@
     "Xi": "",
     "Omega": "",
     "Photon": "",
-    "Collision": ""
+    "Collision": "RCT flags are checked implicitly and Sel8 is an optional cut. Please make sure to check that NOT using Sel8 does not change your physics signal."
   }
 }

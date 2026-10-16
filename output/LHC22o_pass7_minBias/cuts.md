@@ -1,7 +1,5 @@
 # Configured cuts
 
-> Femto producer cuts for the GP derived-data train, wagon AAA_FemtoProducer_GP_Derived_22_24_v3
-
 **Download the derived data:** _pending -- added once the production train completes_
 
 | | |
@@ -23,6 +21,8 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 | Expected output size (full run) | 3.2 TB |
 
 ## Collision
+
+> RCT flags are checked implicitly and Sel8 is an optional cut. Please make sure to check that NOT using Sel8 does not change your physics signal.
 
 ### Prefilters
 
@@ -61,8 +61,6 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 | Minimum Sphericity | minimal | 0.700000 |  |
 
 ## Track
-
-> Only the minimal cuts matter here; PID bits are left loose on purpose.
 
 ### Prefilters
 
