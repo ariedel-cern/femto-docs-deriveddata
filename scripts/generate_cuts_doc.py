@@ -188,17 +188,20 @@ def render_header(outdir, doc_config):
         lines.append("\n**Hyperloop dataset:** _pending -- added once the derived data has been produced_")
 
     full_config_path = os.path.join(outdir, "full_config.json")
+    train_id = doc_config.get("train_id")
+    rows = []
     if os.path.exists(full_config_path):
         with open(full_config_path) as f:
             cfg = json.load(f)
+        rows.append(f"| Software tag | {cfg.get('package_tag', '?')} |")
+    if train_id:
+        train_url = f"https://alimonitor.cern.ch/hyperloop/train-run/{train_id}/general"
+        rows.append(f"| Test train | [{train_id}]({train_url}) |")
+    if rows:
         lines.append("")
         lines.append("| | |")
         lines.append("| --- | --- |")
-        lines.append(f"| Package tag | {cfg.get('package_tag', '?')} |")
-        lines.append(f"| Production type | {cfg.get('dataset_production_type', '?')} |")
-        inputdata = cfg.get("inputdata") or []
-        if inputdata:
-            lines.append(f"| Input data | {inputdata[0]}{' + ' + str(len(inputdata) - 1) + ' more' if len(inputdata) > 1 else ''} |")
+        lines.extend(rows)
 
     return "\n".join(lines)
 

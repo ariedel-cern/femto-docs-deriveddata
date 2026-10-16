@@ -1,4 +1,4 @@
-# LHC22o_pass7_minBias femto producer cuts
+# CF_LHC22o_pass7_minBias_Femto_GP
 
 **AnalysisResults.root for cutculator.py:** _pending -- added once the production train completes_
 
@@ -6,9 +6,8 @@
 
 | | |
 | --- | --- |
-| Package tag | VO_ALICE@O2Physics::daily-20261008-0000-1 |
-| Production type | DATA |
-| Input data | /alice/data/2022/LHC22o/527041/apass7/0500 + 1 more |
+| Software tag | VO_ALICE@O2Physics::daily-20261008-0000-1 |
+| Test train | [782224](https://alimonitor.cern.ch/hyperloop/train-run/782224/general) |
 
 ## Collision
 
