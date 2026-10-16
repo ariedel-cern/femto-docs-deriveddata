@@ -13,7 +13,11 @@ composed from a smaller "short" validation train -- visible on the
 Hyperloop train-run page as the train it's "based on" -- via its
 short_train_id field. Not every production train has one (some run
 straight on the full dataset with no smaller validation step first); the
-field is simply absent/null when there isn't one.
+field is simply absent/null when there isn't one. When there is one, its
+own performance numbers are pulled too and saved alongside the production
+train's, as the "projected from test" figures in performance.json --
+generally the more representative estimate, since it's a separate,
+smaller-scale run rather than just the production train's own sanity test.
 
 AnalysisResults.root/configuration.json/etc. are then downloaded from
 whichever train actually holds them: the short train's own test if the
@@ -150,8 +154,8 @@ def compute_performance(meta):
     return perf
 
 
-def print_performance(perf):
-    print("\nPerformance overview (of this test, extrapolated where noted):")
+def print_performance(label, perf):
+    print(f"\n{label}:")
     if "reduction_factor" in perf:
         print(f"  Reduction factor:   {perf['reduction_factor']:.1f}x")
     if "mem_pss_avg_bytes" in perf and perf["mem_pss_avg_bytes"] is not None:
@@ -224,14 +228,25 @@ def main():
     base_url = test_directory_url(input_train_id)
     print(f"Downloading from {base_url}")
 
-    perf = None
+    # "full_train" is the production train's own numbers (always); "test"
+    # is the smaller train we actually pulled AnalysisResults.root from,
+    # when that's a different train -- its ratios projected onto the full
+    # dataset are normally the more representative estimate.
+    test_meta = meta if input_train_id == production_train_id else fetch_train_metadata(session, input_train_id)
+
+    performance = {}
     if meta:
         with open(os.path.join(args.outdir, "train_meta.json"), "w") as f:
             json.dump(meta, f, indent=2)
-        perf = compute_performance(meta)
+        performance["full_train"] = compute_performance(meta)
+        print_performance("Full train", performance["full_train"])
+    if test_meta and input_train_id != production_train_id:
+        performance["test"] = compute_performance(test_meta)
+        print_performance("Projected from test", performance["test"])
+
+    if performance:
         with open(os.path.join(args.outdir, "performance.json"), "w") as f:
-            json.dump(perf, f, indent=2)
-        print_performance(perf)
+            json.dump(performance, f, indent=2)
 
     files = args.only if args.only else list(DEFAULT_FILES)
     if args.with_aod and AOD_FILE not in files:

@@ -1,6 +1,6 @@
 # CF_LHC24_pass1_minBias_Femto_GP
 
-**AnalysisResults.root for cutculator.py:** [https://alimonitor.cern.ch/catalogue/?path=/alice/cern.ch/user/a/alihyperloop/jobs/0624/hy_6246406/AOD#/alice/cern.ch/user/a/alihyperloop/jobs/0624/hy_6246406/AOD/002/AnalysisResults.root](https://alimonitor.cern.ch/catalogue/?path=/alice/cern.ch/user/a/alihyperloop/jobs/0624/hy_6246406/AOD#/alice/cern.ch/user/a/alihyperloop/jobs/0624/hy_6246406/AOD/002/AnalysisResults.root)
+**AnalysisResults.root for cutculator.py:** [https://alimonitor.cern.ch/catalogue/?path=/alice/cern.ch/user/a/alihyperloop/jobs/0624/hy_6246406/AOD#/alice/cern.ch/user/a/alihyperloop/jobs/0624/hy_6246406/AOD/002/](https://alimonitor.cern.ch/catalogue/?path=/alice/cern.ch/user/a/alihyperloop/jobs/0624/hy_6246406/AOD#/alice/cern.ch/user/a/alihyperloop/jobs/0624/hy_6246406/AOD/002/)
 
 **Hyperloop dataset:** [https://alimonitor.cern.ch/hyperloop/view-dataset/2668](https://alimonitor.cern.ch/hyperloop/view-dataset/2668)
 
@@ -533,7 +533,9 @@
 
 ## Performance overview
 
-Measured on this test; "expected" rows extrapolate this test's ratios to the full dataset.
+"Expected" rows extrapolate the measured ratios to the full dataset.
+
+### Full train
 
 | | |
 | --- | --- |

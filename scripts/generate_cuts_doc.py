@@ -252,24 +252,8 @@ def render_header(outdir, doc_config):
     return "\n".join(lines)
 
 
-def render_performance(outdir):
-    """Rendered at the very end of the doc -- it's operational information
-    about the test run, not something an analyser needs to read the cuts."""
-    perf_path = os.path.join(outdir, "performance.json")
-    if not os.path.exists(perf_path):
-        return None
-
-    with open(perf_path) as f:
-        perf = json.load(f)
-
-    lines = [
-        "## Performance overview",
-        "",
-        "Measured on this test; \"expected\" rows extrapolate this test's ratios to the full dataset.",
-        "",
-        "| | |",
-        "| --- | --- |",
-    ]
+def render_performance_table(perf):
+    lines = ["| | |", "| --- | --- |"]
     if "reduction_factor" in perf:
         lines.append(f"| Reduction factor | {perf['reduction_factor']:.1f}x |")
     if perf.get("mem_pss_avg_bytes") is not None:
@@ -280,8 +264,33 @@ def render_performance(outdir):
         lines.append(f"| Expected resources (full run) | {human_seconds(perf['expected_resources_core_seconds'])} core-time |")
     if "expected_output_size_bytes" in perf:
         lines.append(f"| Expected output size (full run) | {human_bytes(perf['expected_output_size_bytes'])} |")
-
     return "\n".join(lines)
+
+
+def render_performance(outdir):
+    """Rendered at the very end of the doc -- it's operational information
+    about the test run, not something an analyser needs to read the cuts.
+    Shows the projection from the (smaller) test train first, if there is
+    one, then the production train's own numbers."""
+    perf_path = os.path.join(outdir, "performance.json")
+    if not os.path.exists(perf_path):
+        return None
+
+    with open(perf_path) as f:
+        performance = json.load(f)
+
+    sections = [
+        "## Performance overview",
+        "\"Expected\" rows extrapolate the measured ratios to the full dataset.",
+    ]
+    if performance.get("test"):
+        sections.append("### Projected from test")
+        sections.append(render_performance_table(performance["test"]))
+    if performance.get("full_train"):
+        sections.append("### Full train")
+        sections.append(render_performance_table(performance["full_train"]))
+
+    return "\n\n".join(sections)
 
 
 def ordered_species_names(species):

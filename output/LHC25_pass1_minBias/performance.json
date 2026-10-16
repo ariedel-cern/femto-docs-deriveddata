@@ -1,23 +1,25 @@
 {
-  "mem_pss_avg_bytes": 3136063490.0,
-  "mem_pss_max_bytes": 3760103420.0,
-  "reduction_factor": 75.77316523463915,
-  "throughput_bytes_per_sec_per_core": 3398766.6929577463,
-  "expected_output_size_bytes": 974116181124.5736,
-  "expected_resources_core_seconds": 21717250.11399764,
-  "_raw": {
-    "input_size": 2413124352,
-    "output_size": 32238707,
-    "derived_output_size": 31846688,
-    "wall_time": 355,
-    "cpu_time": 505,
-    "cpu_cores": 2,
-    "dataset_size": null,
-    "dataset_size_with_parents": 73811866350088,
-    "dataset_size_without_parents": 73811866350088,
-    "mem_pss": 3136063490.0,
-    "mem_pss_max": 3760103420.0,
-    "package_tag": "VO_ALICE@O2Physics::daily-20261008-0000-1",
-    "dataset_name": "LHC25_pass1_MinBias"
+  "full_train": {
+    "mem_pss_avg_bytes": 3136063490.0,
+    "mem_pss_max_bytes": 3760103420.0,
+    "reduction_factor": 75.77316523463915,
+    "throughput_bytes_per_sec_per_core": 3398766.6929577463,
+    "expected_output_size_bytes": 974116181124.5736,
+    "expected_resources_core_seconds": 21717250.11399764,
+    "_raw": {
+      "input_size": 2413124352,
+      "output_size": 32238707,
+      "derived_output_size": 31846688,
+      "wall_time": 355,
+      "cpu_time": 505,
+      "cpu_cores": 2,
+      "dataset_size": null,
+      "dataset_size_with_parents": 73811866350088,
+      "dataset_size_without_parents": 73811866350088,
+      "mem_pss": 3136063490.0,
+      "mem_pss_max": 3760103420.0,
+      "package_tag": "VO_ALICE@O2Physics::daily-20261008-0000-1",
+      "dataset_name": "LHC25_pass1_MinBias"
+    }
   }
 }

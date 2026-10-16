@@ -492,7 +492,19 @@
 
 ## Performance overview
 
-Measured on this test; "expected" rows extrapolate this test's ratios to the full dataset.
+"Expected" rows extrapolate the measured ratios to the full dataset.
+
+### Projected from test
+
+| | |
+| --- | --- |
+| Reduction factor | 118.4x |
+| PSS memory | avg 2.1 GB, max 2.3 GB |
+| Throughput | 5.0 MB/s per core |
+| Expected resources (full run) | 71d 17h 53m 16s core-time |
+| Expected output size (full run) | 256.7 GB |
+
+### Full train
 
 | | |
 | --- | --- |
