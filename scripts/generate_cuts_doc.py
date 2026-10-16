@@ -15,12 +15,14 @@ always-enforced floor (no bit) can be told apart from their selectable
 tightenings (bit N).
 
 Takes the same JSON config file as download_test_output.py, so that the
-"title", general "comment", "test_train_id"/"production_train_id" (linked
-to their Hyperloop train-run overview pages), the "cutculator_input_link"
-(a link to an AnalysisResults.root from the production train, for
-analysers to feed into cutculator.py themselves), the
-"hyperloop_dataset_link" (the Hyperloop dataset for the derived data, from
-operators) -- the latter two added by hand once available -- and any
+"title", general "comment", "production_train_id" and the test train it
+was actually downloaded from (download_test_output.py records that
+resolved id in SOURCE.json; see its docstring for how it's found) -- both
+linked to their Hyperloop train-run overview pages -- the
+"cutculator_input_link" (a link to an AnalysisResults.root from the
+production train, for analysers to feed into cutculator.py themselves),
+the "hyperloop_dataset_link" (the Hyperloop dataset for the derived data,
+from operators) -- the latter two added by hand once available -- and any
 per-species comments ("species_comments": {species name: comment}) make
 it into the doc. A comment that is empty or whose key is missing is
 simply skipped. The performance overview (not needed by analysers reading
@@ -190,7 +192,15 @@ def render_header(outdir, doc_config):
         lines.append("\n**Hyperloop dataset:** _pending -- added once the derived data has been produced_")
 
     full_config_path = os.path.join(outdir, "full_config.json")
+    source_path = os.path.join(outdir, "SOURCE.json")
     test_train_id = doc_config.get("test_train_id")
+    if os.path.exists(source_path):
+        with open(source_path) as f:
+            # input_train_id is whatever download_test_output.py actually
+            # pulled AnalysisResults.root from: the short/base train if the
+            # production train is based on one, else the production train
+            # itself -- resolved automatically via its short_train_id.
+            test_train_id = json.load(f).get("input_train_id", test_train_id)
     production_train_id = doc_config.get("production_train_id")
     rows = []
     if os.path.exists(full_config_path):

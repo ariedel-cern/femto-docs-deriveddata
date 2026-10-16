@@ -1,7 +1,7 @@
 {
   "config_file": "configs/LHC22o_pass7_minBias.json",
-  "resolved_id": 777250,
-  "resolved_kind": "train",
+  "production_train_id": 782224,
+  "input_train_id": 777250,
   "resolved_directory": "https://alimonitor.cern.ch/train-workdir/tests/0077/00777250/",
   "downloaded_files": [
     "AnalysisResults.root",

@@ -1,16 +1,25 @@
 #!/usr/bin/env python3
 
 """!
-@brief  Download the output of a Hyperloop train test (full or quick) so that
+@brief  Download the output of a Hyperloop train test so that
         generate_cuts_doc.py can turn it into derived-data documentation.
 
 Takes a small JSON config file (see configs/*.json for an example) with at
-least a "test_train_id" field. It resolves the rest itself: calls the
-Hyperloop API for that train's "full" test metadata (performance overview:
-reduction factor, PSS memory, throughput, expected resources for the full
-run), and downloads the test's cached output -- AnalysisResults.root,
-configuration.json, etc. -- from the plain HTTPS directory Hyperloop serves
-it from:
+least a "production_train_id" field. Everything else is resolved via the
+Hyperloop API: it fetches that train's own "full" test metadata
+(performance overview: reduction factor, PSS memory, throughput, expected
+resources for the full run), which also tells us whether this train was
+composed from a smaller "short" validation train -- visible on the
+Hyperloop train-run page as the train it's "based on" -- via its
+short_train_id field. Not every production train has one (some run
+straight on the full dataset with no smaller validation step first); the
+field is simply absent/null when there isn't one.
+
+AnalysisResults.root/configuration.json/etc. are then downloaded from
+whichever train actually holds them: the short train's own test if the
+production train is based on one, otherwise the production train's own
+test. Both live at the same kind of plain HTTPS directory Hyperloop caches
+test output at:
 
     https://alimonitor.cern.ch/train-workdir/tests/<id[:4]>/<id>/
 
@@ -18,34 +27,28 @@ Both the API and the directory require your personal grid certificate as a
 TLS client cert -- the same usercert.pem/userkey.pem used for alien://
 access.
 
-A femto cuts validation run typically has two trains, both with their own
-Hyperloop overview page: a "test train" run on a small dataset first (this
-is the one this script downloads from), and -- once that looks right -- a
-"production train" composed on the full dataset (which gets its own test
-too, but we only need a link to it, not its output).
-
-Config file fields (only test_train_id is used here; the rest are read by
-generate_cuts_doc.py):
-    title                  doc title (H1); falls back to "Configured cuts"
-    comment                 free text, for humans reading the config
-    test_train_id           the Hyperloop train number of the small-dataset
-                             validation test (required)
-    production_train_id     the Hyperloop train number of the composed,
-                             full-dataset train, once it exists; leave
-                             null/empty until then
-    cutculator_input_link   link to an AnalysisResults.root from the
-                             production train, for analysers to feed into
-                             cutculator.py themselves; filled in by hand
-                             once that train has run -- leave null/empty
-                             until then, generate_cuts_doc.py renders a
-                             placeholder in its place
-    hyperloop_dataset_link  link to the Hyperloop dataset for the derived
-                             data, filled in by hand once operators provide
-                             it after the derived data has been produced;
-                             same null/placeholder behaviour
-    species_comments        optional {species name: comment} map, rendered
-                             under that species' heading; empty or missing
-                             entries are skipped
+Config file fields (only production_train_id/test_train_id are used here;
+the rest are read by generate_cuts_doc.py):
+    title                   doc title (H1); falls back to "Configured cuts"
+    comment                  free text, for humans reading the config
+    production_train_id      the Hyperloop train number of the composed,
+                              full-dataset train (required)
+    test_train_id            optional override: skip the short_train_id
+                              auto-lookup and download from this train id
+                              instead
+    cutculator_input_link    link to an AnalysisResults.root from the
+                              production train, for analysers to feed into
+                              cutculator.py themselves; filled in by hand
+                              once that train has run -- leave null/empty
+                              until then, generate_cuts_doc.py renders a
+                              placeholder in its place
+    hyperloop_dataset_link   link to the Hyperloop dataset for the derived
+                              data, filled in by hand once operators provide
+                              it after the derived data has been produced;
+                              same null/placeholder behaviour
+    species_comments         optional {species name: comment} map, rendered
+                              under that species' heading; empty or missing
+                              entries are skipped
 
 Example:
 
@@ -65,7 +68,6 @@ from hyperloop_common import (
     human_bytes,
     human_seconds,
     make_session,
-    parse_train_or_test_id,
     test_directory_url,
 )
 
@@ -84,21 +86,18 @@ DEFAULT_FILES = [
 AOD_FILE = "AO2D.root"
 
 
-def fetch_metadata(session, test_id, kind):
-    """Pull the same JSON the Hyperloop train-run/general and wagon-test
-    pages are built from, so we get the performance overview numbers
-    without having to scrape HTML."""
-    if kind == "train":
-        resp = session.get(f"{API_BASE}/trains/train.jsp", params={"train_id": test_id, "type": "full"}, timeout=60)
-    else:
-        resp = session.get(f"{API_BASE}/trains/test-result.jsp", params={"test_id": test_id}, timeout=60)
+def fetch_train_metadata(session, train_id):
+    """Pull the same JSON the Hyperloop train-run/general page is built
+    from: performance numbers, and -- if this train was composed from a
+    smaller validation train -- its short_train_id."""
+    resp = session.get(f"{API_BASE}/trains/train.jsp", params={"train_id": train_id, "type": "full"}, timeout=60)
     if resp.status_code != 200:
-        print(f"  warning: could not fetch test metadata (HTTP {resp.status_code})")
+        print(f"  warning: could not fetch train metadata (HTTP {resp.status_code})")
         return None
     try:
         return resp.json()
     except ValueError:
-        print("  warning: test metadata response was not JSON")
+        print("  warning: train metadata response was not JSON")
         return None
 
 
@@ -183,14 +182,14 @@ def download_file(session, base_url, filename, outdir):
 def load_config(config_path):
     with open(config_path) as f:
         cfg = json.load(f)
-    if not cfg.get("test_train_id"):
-        raise SystemExit(f"{config_path}: missing required field 'test_train_id'")
+    if not cfg.get("production_train_id"):
+        raise SystemExit(f"{config_path}: missing required field 'production_train_id'")
     return cfg
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("config", help="JSON config file with at least a test_train_id field (see configs/*.json)")
+    parser.add_argument("config", help="JSON config file with at least a production_train_id field (see configs/*.json)")
     parser.add_argument("outdir", help="Directory to download into (created if missing)")
     parser.add_argument("--cert", default=os.path.expanduser("~/.globus/usercert.pem"), help="Grid certificate (default: ~/.globus/usercert.pem)")
     parser.add_argument("--key", default=os.path.expanduser("~/.globus/userkey.pem"), help="Grid certificate key (default: ~/.globus/userkey.pem)")
@@ -203,19 +202,31 @@ def main():
                   f"Pass --cert/--key if your certificate lives elsewhere.")
 
     cfg = load_config(args.config)
-    test_id, kind = parse_train_or_test_id(str(cfg["test_train_id"]))
-    base_url = test_directory_url(test_id)
+    production_train_id = int(cfg["production_train_id"])
     os.makedirs(args.outdir, exist_ok=True)
 
-    print(f"Resolved {kind} id {test_id} -> {base_url}")
+    print(f"Production train {production_train_id}")
 
     session = make_session(args.cert, args.key)
+    meta = fetch_train_metadata(session, production_train_id)
 
-    meta = fetch_metadata(session, test_id, kind)
+    explicit_test_train_id = cfg.get("test_train_id")
+    if explicit_test_train_id:
+        input_train_id = int(explicit_test_train_id)
+        print(f"Using explicit test_train_id {input_train_id} from the config")
+    elif meta and meta.get("short_train_id"):
+        input_train_id = int(meta["short_train_id"])
+        print(f"Based on short (validation) train {input_train_id}")
+    else:
+        input_train_id = production_train_id
+        print("No short/base train -- using the production train's own test output")
+
+    base_url = test_directory_url(input_train_id)
+    print(f"Downloading from {base_url}")
+
     perf = None
     if meta:
-        meta_name = "train_meta.json" if kind == "train" else "test_meta.json"
-        with open(os.path.join(args.outdir, meta_name), "w") as f:
+        with open(os.path.join(args.outdir, "train_meta.json"), "w") as f:
             json.dump(meta, f, indent=2)
         perf = compute_performance(meta)
         with open(os.path.join(args.outdir, "performance.json"), "w") as f:
@@ -238,8 +249,8 @@ def main():
 
     provenance = {
         "config_file": args.config,
-        "resolved_id": test_id,
-        "resolved_kind": kind,
+        "production_train_id": production_train_id,
+        "input_train_id": input_train_id,
         "resolved_directory": base_url,
         "downloaded_files": downloaded,
     }

@@ -1,7 +1,6 @@
 {
        "title": "CF_LHC22o_pass7_minBias_Femto_GP",
        "comment": "",
-       "test_train_id": 777250,
        "production_train_id": 782224,
        "cutculator_input_link": null,
        "hyperloop_dataset_link": null,

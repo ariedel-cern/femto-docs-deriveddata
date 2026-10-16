@@ -18,8 +18,7 @@ small JSON config in `configs/` (see `configs/LHC22o_pass7_minBias.json`):
 {
   "title": "doc title (H1); falls back to \"Configured cuts\"",
   "comment": "free text, for humans reading the config",
-  "test_train_id": 778977,
-  "production_train_id": null,
+  "production_train_id": 778977,
   "cutculator_input_link": null,
   "hyperloop_dataset_link": null,
   "species_comments": {
@@ -28,12 +27,17 @@ small JSON config in `configs/` (see `configs/LHC22o_pass7_minBias.json`):
 }
 ```
 
-A femto cuts run typically has two trains, each with its own permanent
-Hyperloop overview page: `test_train_id` is run on a small dataset first
-(this is what `download_test_output.py` actually pulls `AnalysisResults.root`
-from), and once that looks right, `production_train_id` is the train
-composed on the full dataset (it gets its own test too, but the doc only
-needs a link to it, not its output) -- filled in by hand once it exists.
+`production_train_id` -- the train composed on the full dataset -- is the
+only train id you need to give it. Some production trains are composed
+from ("based on") a smaller validation train run first; `download_test_output.py`
+checks the production train's own Hyperloop metadata for a `short_train_id`
+and, if there is one, downloads `AnalysisResults.root` from that smaller
+train instead (this is what the Hyperloop train-run page shows as the
+train it's "based on"). If there's no base train, it just uses the
+production train's own test output. Either way, both trains end up linked
+in the doc from their permanent Hyperloop overview pages -- no need to
+look up or specify the base train id by hand. (An explicit `test_train_id`
+field still overrides this auto-lookup, if you ever need it to.)
 
 `cutculator_input_link` points at an `AnalysisResults.root` from the
 production train, for analysers to feed into `cutculator.py` themselves.
@@ -41,9 +45,8 @@ production train, for analysers to feed into `cutculator.py` themselves.
 data. Both are filled in by hand once available -- the first once the
 production train has run, the second once operators hand over the dataset
 link after the derived data has been produced -- and until then stay
-`null`, showing a placeholder. `comment`, `production_train_id`, and any
-entry in `species_comments` are skipped (or shown as a placeholder, for the
-two links) if empty or missing.
+`null`, showing a placeholder. `comment` and any entry in
+`species_comments` are skipped if empty or missing.
 
 ```bash
 # 1. resolves the train's "full" test itself, pulls the performance overview
@@ -56,17 +59,16 @@ python3 scripts/download_test_output.py \
 # 2. turn AnalysisResults.root's self-documenting histogram bin labels into
 #    a markdown doc: one merged cuts table per particle species (tracks,
 #    K0short, Lambda, Sigma(+), Xi, Omega, ...; AntiLambda is skipped, same
-#    cuts as Lambda), with the performance overview and config comment/link
-#    as a header.
+#    cuts as Lambda), links/comment/software-tag as a header, and the
+#    performance overview at the very end (analysers don't need it).
 python3 scripts/generate_cuts_doc.py \
     configs/LHC22o_pass7_minBias.json ./output/LHC22o_pass7_minBias
 ```
 
 This reuses the same bin-label format that `cutculator.py`
 (`O2Physics/PWGCF/Femto/Macros/`) parses interactively, but lists every
-configured threshold per selection rather than asking the user to pick one
-(bit positions are left out of the table -- they're just the row order
-within each selection). `generate_cuts_doc.py` needs a PyROOT-enabled
+configured threshold per selection, with its bit position, rather than
+asking the user to pick one. `generate_cuts_doc.py` needs a PyROOT-enabled
 environment (e.g. an alienv O2Physics env); `download_test_output.py` only
 needs `requests`.
 

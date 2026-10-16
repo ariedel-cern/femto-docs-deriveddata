@@ -2,13 +2,11 @@
 
 """!
 @brief  Shared helpers for talking to alimonitor.cern.ch (Hyperloop) from the
-        command line: resolving a train/test id, building the cached test
-        output directory URL, and a grid-cert-authenticated requests session.
+        command line: Hyperloop train-run/test-output URL builders, and a
+        grid-cert-authenticated requests session.
 
 @author Anton Riedel <anton.riedel@cern.ch>, Technical University of Munich
 """
-
-import re
 
 import requests
 import urllib3
@@ -22,27 +20,6 @@ def train_run_url(train_id):
     """The permanent Hyperloop overview page for a train run (unlike the
     cached test-output directory, this isn't cleaned up)."""
     return f"{HYPERLOOP_BASE}/train-run/{train_id}/general"
-
-
-def parse_train_or_test_id(url_or_id):
-    """Accept a bare train/test id, or any Hyperloop train-run/wagon-test
-    URL (general overview, test/full, test/quick, ...), and return
-    (id, kind) where kind is "train" (a whole composed train, identified by
-    train_id) or "wagon" (a single wagon's quick test, identified by its own
-    test_id)."""
-    s = str(url_or_id).strip()
-    if s.isdigit():
-        return int(s), "train"
-    m = re.search(r"/train-run/(\d+)", s)
-    if m:
-        return int(m.group(1)), "train"
-    m = re.search(r"/wagon-test/(\d+)", s)
-    if m:
-        return int(m.group(1)), "wagon"
-    digit_runs = re.findall(r"\d+", s)
-    if digit_runs:
-        return int(digit_runs[-1]), "train"
-    raise ValueError(f"Could not find a numeric train/test id in: {url_or_id}")
 
 
 def test_directory_url(test_id):
