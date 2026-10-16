@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - output/LHC22o_pass7_minBias/cuts.md
+      - output/LHC23_pass4_thin/cuts.md
       - output/LHC24_pass1_minBias/cuts.md
       - output/LHC25_pass1_minBias/cuts.md
 
@@ -16,6 +17,8 @@ jobs:
         include:
           - path: output/LHC22o_pass7_minBias/cuts.md
             gist_id: 56975617144260b07692a8adcf3df2c1
+          - path: output/LHC23_pass4_thin/cuts.md
+            gist_id: 12fe4f7ebfe13fa3d81fdb2a4df18bda
           - path: output/LHC24_pass1_minBias/cuts.md
             gist_id: 4c7a7fda5be717e3e509b6cd22b40497
           - path: output/LHC25_pass1_minBias/cuts.md

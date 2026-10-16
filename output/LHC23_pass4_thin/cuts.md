@@ -1,4 +1,4 @@
-# CF_LHC23_pass4_Femto_GP
+# CF_LHC23_pass4_thin_Femto_GP
 
 **AnalysisResults.root for cutculator.py:** _pending -- added once the production train completes_
 
@@ -12,7 +12,7 @@
 
 ## Collision
 
-> RCT flags are checked implicitly and Sel8 is an optional cut. Please make sure to check that NOT using Sel8 does not change your physics signal.
+> RCT flags are not available for pass4 of LHC23 data, so no cut on RCT flags is applied. Sel8 is an optional cut. Please make sure to check that NOT using Sel8 does not change your physics signal.
 
 ### Prefilters
 

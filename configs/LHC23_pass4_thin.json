@@ -13,6 +13,6 @@
               "Xi": "No Omega rejection.",
               "Omega": "Xi rejection via prefilter, cannot be changed during analysis.",
               "Photon": "",
-              "Collision": "RCT flags are not available for pass4 of LHC23 data, so no cut on RCT flags is apliedd. Sel8 is an optional cut. Please make sure to check that NOT using Sel8 does not change your physics signal."
+              "Collision": "RCT flags are not available for pass4 of LHC23 data, so no cut on RCT flags is applied. Sel8 is an optional cut. Please make sure to check that NOT using Sel8 does not change your physics signal."
        }
 }
