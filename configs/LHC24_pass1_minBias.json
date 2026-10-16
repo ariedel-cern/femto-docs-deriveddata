@@ -2,8 +2,8 @@
        "title": "CF_LHC24_pass1_minBias_Femto_GP",
        "comment": "",
        "production_train_id": 777635,
-       "cutculator_input_link": null,
-       "hyperloop_dataset_link": null,
+       "cutculator_input_link": "https://alimonitor.cern.ch/catalogue/?path=/alice/cern.ch/user/a/alihyperloop/jobs/0624/hy_6246406/AOD#/alice/cern.ch/user/a/alihyperloop/jobs/0624/hy_6246406/AOD/002/AnalysisResults.root",
+       "hyperloop_dataset_link": "https://alimonitor.cern.ch/hyperloop/view-dataset/2668",
        "species_comments": {
               "Track": "Lower pT cut in prefilter of 0.136 necessary for ordering of DCA cuts.",
               "K0short": "Lambda rejection via prefilter, cannot be changed during analysis.",
