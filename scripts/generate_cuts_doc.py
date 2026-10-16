@@ -58,14 +58,6 @@ def parse_bin_label(label):
     return result
 
 
-def format_value_with_comment(b):
-    val = b.get("Value", "")
-    comment = b.get("Comment", "")
-    if comment and comment.upper() != "X":
-        return f"{val} (comment={comment})"
-    return val
-
-
 def is_minimal_bin(b):
     return b.get("MinimalCut", "0") == "1" and b.get("OptionalCut", "0") == "0"
 
@@ -105,10 +97,18 @@ def discover_species(tdir):
     return species
 
 
+def md_cell(value):
+    """Escape markdown table-cell-breaking characters. Selection names like
+    'Max. |DCA_xy| ...' and function-valued cuts like '0.004+0.013*pow(x,-1)'
+    can contain a literal '|', which an unescaped table reads as a new
+    column."""
+    return str(value).replace("|", "\\|")
+
+
 def render_filters_table(bins):
     lines = ["| Filter | Value |", "| --- | --- |"]
     for b in bins:
-        lines.append(f"| {b.get('FilterName', 'unknown')} | {b.get('FilterValue', '')} |")
+        lines.append(f"| {md_cell(b.get('FilterName', 'unknown'))} | {md_cell(b.get('FilterValue', ''))} |")
     return "\n".join(lines)
 
 
@@ -130,7 +130,7 @@ def render_selection_table(bins):
         for b in sorted(group, key=sort_key):
             comment = b.get("Comment", "")
             comment = "" if comment.upper() == "X" else comment
-            lines.append(f"| {sel_name} | {bin_kind(b)} | {b.get('Value', '')} | {comment} |")
+            lines.append(f"| {md_cell(sel_name)} | {bin_kind(b)} | {md_cell(b.get('Value', ''))} | {md_cell(comment)} |")
     return "\n".join(lines)
 
 

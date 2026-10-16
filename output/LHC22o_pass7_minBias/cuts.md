@@ -15,9 +15,9 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 | | |
 | --- | --- |
 | Reduction factor | 94.4x |
-| PSS memory | avg 4.6 GB, max 4.7 GB |
-| Throughput | 3.8 MB/s per core |
-| Expected resources (full run) | 976d 1h 56m 2s core-time |
+| PSS memory | avg 4.2 GB, max 4.7 GB |
+| Throughput | 3.6 MB/s per core |
+| Expected resources (full run) | 1012d 8h 14m 50s core-time |
 | Expected output size (full run) | 3.2 TB |
 
 ## Collision
@@ -95,10 +95,10 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 | Min. number of ITS clusters | minimal | 7.000000 |  |
 | Min. number of ITS clusters in the inner barrel | minimal | 1.000000 |  |
 | Min. number of ITS clusters in the inner barrel | minimal | 3.000000 |  |
-| Max. |DCA_xy| (cm) as a function of pT | minimal | 0.1 |  |
-| Max. |DCA_xy| (cm) as a function of pT | minimal | 0.004+0.013*pow(x,-1) |  |
-| Max. |DCA_z| (cm) as a function of pT | minimal | 0.2 |  |
-| Max. |DCA_z| (cm) as a function of pT | minimal | 0.004+0.013*pow(x,-1) |  |
+| Max. \|DCA_xy\| (cm) as a function of pT | minimal | 0.1 |  |
+| Max. \|DCA_xy\| (cm) as a function of pT | minimal | 0.004+0.013*pow(x,-1) |  |
+| Max. \|DCA_z\| (cm) as a function of pT | minimal | 0.2 |  |
+| Max. \|DCA_z\| (cm) as a function of pT | minimal | 0.004+0.013*pow(x,-1) |  |
 | ITS He3 PID | optional | -1.5;3.40282e+38 |  |
 | ITS He3 PID | optional | -1.3;3.40282e+38 |  |
 | TPC Pion PID | optional | -3.5;3 |  |
@@ -183,9 +183,9 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 | Max. absolute pseudo rapidity of daughters | minimal | 0.830000 |  |
 | Max. absolute pseudo rapidity of daughters | minimal | 0.800000 |  |
 | Max. absolute pseudo rapidity of daughters | minimal | 0.770000 |  |
-| Min. |DCAxy| of the daughters from primary vertex | minimal | 0.040000 |  |
-| Min. |DCAxy| of the daughters from primary vertex | minimal | 0.050000 |  |
-| Min. |DCAxy| of the daughters from primary vertex | minimal | 0.060000 |  |
+| Min. \|DCAxy\| of the daughters from primary vertex | minimal | 0.040000 |  |
+| Min. \|DCAxy\| of the daughters from primary vertex | minimal | 0.050000 |  |
+| Min. \|DCAxy\| of the daughters from primary vertex | minimal | 0.060000 |  |
 | Min. number of TPC clusters of daughters | minimal | 70.000000 |  |
 | Min. number of TPC clusters of daughters | minimal | 80.000000 |  |
 | Min. number of TPC clusters of daughters | minimal | 90.000000 |  |
@@ -236,9 +236,9 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 | Max. absolute pseudo rapidity of daughters | minimal | 0.830000 |  |
 | Max. absolute pseudo rapidity of daughters | minimal | 0.800000 |  |
 | Max. absolute pseudo rapidity of daughters | minimal | 0.770000 |  |
-| Min. |DCAxy| of the daughters from primary vertex | minimal | 0.040000 |  |
-| Min. |DCAxy| of the daughters from primary vertex | minimal | 0.050000 |  |
-| Min. |DCAxy| of the daughters from primary vertex | minimal | 0.060000 |  |
+| Min. \|DCAxy\| of the daughters from primary vertex | minimal | 0.040000 |  |
+| Min. \|DCAxy\| of the daughters from primary vertex | minimal | 0.050000 |  |
+| Min. \|DCAxy\| of the daughters from primary vertex | minimal | 0.060000 |  |
 | Min. number of TPC clusters of daughters | minimal | 70.000000 |  |
 | Min. number of TPC clusters of daughters | minimal | 80.000000 |  |
 | Min. number of TPC clusters of daughters | minimal | 90.000000 |  |
@@ -401,9 +401,9 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 | Daughter TPC Clusters Min | minimal | 70.000000 |  |
 | Daughter TPC Clusters Min | minimal | 80.000000 |  |
 | Daughter TPC Clusters Min | minimal | 90.000000 |  |
-| Daughter |DCAxy| Min | minimal | 0.040000 |  |
-| Daughter |DCAxy| Min | minimal | 0.050000 |  |
-| Daughter |DCAxy| Min | minimal | 0.060000 |  |
+| Daughter \|DCAxy\| Min | minimal | 0.040000 |  |
+| Daughter \|DCAxy\| Min | minimal | 0.050000 |  |
+| Daughter \|DCAxy\| Min | minimal | 0.060000 |  |
 | Bachelor TPC Pion PID | minimal | 5.000000 |  |
 | Bachelor TPC Pion PID | minimal | 4.000000 |  |
 | Bachelor TPC Pion PID | minimal | 3.000000 |  |
@@ -472,9 +472,9 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 | Daughter TPC Clusters Min | minimal | 70.000000 |  |
 | Daughter TPC Clusters Min | minimal | 80.000000 |  |
 | Daughter TPC Clusters Min | minimal | 90.000000 |  |
-| Daughter |DCAxy| Min | minimal | 0.040000 |  |
-| Daughter |DCAxy| Min | minimal | 0.050000 |  |
-| Daughter |DCAxy| Min | minimal | 0.060000 |  |
+| Daughter \|DCAxy\| Min | minimal | 0.040000 |  |
+| Daughter \|DCAxy\| Min | minimal | 0.050000 |  |
+| Daughter \|DCAxy\| Min | minimal | 0.060000 |  |
 | Bachelor TPC Kaon PID | minimal | 5.000000 |  |
 | Bachelor TPC Kaon PID | minimal | 4.000000 |  |
 | Bachelor TPC Kaon PID | minimal | 3.000000 |  |
@@ -512,8 +512,8 @@ Measured on this test; "expected" rows extrapolate this test's ratios to the ful
 | Min. CPA (cosine pointing angle) | minimal | 0.850000 |  |
 | Min. CPA (cosine pointing angle) | minimal | 0.900000 |  |
 | Min. CPA (cosine pointing angle) | minimal | 0.950000 |  |
-| Max. |DCAxy| to PV | minimal | 999999995904.000000 |  |
-| Max. |DCAz| to PV | minimal | 999999995904.000000 |  |
+| Max. \|DCAxy\| to PV | minimal | 999999995904.000000 |  |
+| Max. \|DCAz\| to PV | minimal | 999999995904.000000 |  |
 | Max. chi2/NDF of conversion vertex | minimal | 999999995904.000000 |  |
 | Min. transverse radius | minimal | 0.000000 |  |
 | Min. transverse radius | minimal | 5.000000 |  |
