@@ -10,8 +10,9 @@ interactively (SelectionName/FilterName/BitPosition/.../Comment, parsed with
 the "___"/":::" delimiters), but instead of asking the user to pick one
 threshold per selection, it lists every configured threshold -- i.e. the
 full menu a downstream analysis can choose from -- grouped by species and
-selection. Bit positions are omitted from the table (selections are listed
-in ascending bit order, so a downstream user can number them back in).
+selection, with the bit position of each threshold so minimal cuts'
+always-enforced floor (no bit) can be told apart from their selectable
+tightenings (bit N).
 
 Takes the same JSON config file as download_test_output.py, so that the
 general "comment", the final "output_download_link" (added by hand once
@@ -114,8 +115,9 @@ def render_filters_table(bins):
 
 def render_selection_table(bins):
     """One table for every selection of a species, in ascending bit order
-    per selection (so bit positions -- deliberately not shown -- can be
-    numbered back in from row order if ever needed)."""
+    per selection. The Bit column distinguishes, for minimal cuts
+    especially, the always-enforced floor (no bit, "always applied") from
+    the selectable tightenings above it (bit N)."""
     groups = {}
     for b in bins:
         sel_name = b.get("SelectionName", "unknown")
@@ -125,12 +127,14 @@ def render_selection_table(bins):
         pos = b.get("BitPosition", "X")
         return (0, -1) if pos.upper() == "X" else (1, int(pos))
 
-    lines = ["| Selection | Type | Value | Comment |", "| --- | --- | --- | --- |"]
+    lines = ["| Selection | Bit | Type | Value | Comment |", "| --- | --- | --- | --- | --- |"]
     for sel_name, group in groups.items():
         for b in sorted(group, key=sort_key):
+            pos = b.get("BitPosition", "X")
+            bit_label = "always applied" if pos.upper() == "X" else pos
             comment = b.get("Comment", "")
             comment = "" if comment.upper() == "X" else comment
-            lines.append(f"| {md_cell(sel_name)} | {bin_kind(b)} | {md_cell(b.get('Value', ''))} | {md_cell(comment)} |")
+            lines.append(f"| {md_cell(sel_name)} | {bit_label} | {bin_kind(b)} | {md_cell(b.get('Value', ''))} | {md_cell(comment)} |")
     return "\n".join(lines)
 
 
