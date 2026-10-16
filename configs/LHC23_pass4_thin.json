@@ -1,7 +1,6 @@
 {
-       "title": "CF_LHC23_pass4_Femto_GP",
+       "title": "CF_LHC23_pass4_thin_Femto_GP",
        "comment": "",
-       "test_train_id": 777211,
        "production_train_id": 777506,
        "cutculator_input_link": null,
        "hyperloop_dataset_link": null,
@@ -14,6 +13,6 @@
               "Xi": "No Omega rejection.",
               "Omega": "Xi rejection via prefilter, cannot be changed during analysis.",
               "Photon": "",
-              "Collision": "RCT flags are checked implicitly and Sel8 is an optional cut. Please make sure to check that NOT using Sel8 does not change your physics signal."
+              "Collision": "RCT flags are not available for pass4 of LHC23 data, so no cut on RCT flags is apliedd. Sel8 is an optional cut. Please make sure to check that NOT using Sel8 does not change your physics signal."
        }
 }
