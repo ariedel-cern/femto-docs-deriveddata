@@ -1,0 +1,18 @@
+{
+       "title": "CF_LHC25_pass1_minBias_Femto_GP_lite",
+       "comment": "Dataset with binned kinematics",
+       "production_train_id": 785540,
+       "cutculator_input_link": "https://alimonitor.cern.ch/catalogue/?path=/alice/cern.ch/user/a/alihyperloop/jobs/0632/hy_6329542/AOD#/alice/cern.ch/user/a/alihyperloop/jobs/0632/hy_6329542/AOD",
+       "hyperloop_dataset_link": "https://alimonitor.cern.ch/hyperloop/view-dataset/3471",
+       "species_comments": {
+              "Track": "Lower pT cut in prefilter of 0.136 necessary for ordering of DCA cuts.",
+              "K0short": "Lambda rejection via prefilter, cannot be changed during analysis.",
+              "Lambda": "K0short rejection via prefilter, cannot be changed during analysis.",
+              "Sigma": "",
+              "SigmaPlus": "",
+              "Xi": "No Omega rejection.",
+              "Omega": "Xi rejection via prefilter, cannot be changed during analysis.",
+              "Photon": "",
+              "Collision": "RCT flags are checked implicitly and Sel8 is an optional cut. Please make sure to check that NOT using Sel8 does not change your physics signal."
+       }
+}

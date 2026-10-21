@@ -1,0 +1,16 @@
+{
+  "config_file": "configs/LHC25_pass1_minBias_lite.json",
+  "production_train_id": 785540,
+  "input_train_id": 785540,
+  "resolved_directory": "https://alimonitor.cern.ch/train-workdir/tests/0078/00785540/",
+  "downloaded_files": [
+    "AnalysisResults.root",
+    "configuration.json",
+    "dpl-config.json",
+    "full_config.json",
+    "OutputDirector.json",
+    "status.json",
+    "stdout.log",
+    "stderr.log"
+  ]
+}
