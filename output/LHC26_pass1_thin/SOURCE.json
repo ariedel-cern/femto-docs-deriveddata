@@ -1,0 +1,16 @@
+{
+  "config_file": "configs/LHC26_pass1_thin.json",
+  "production_train_id": 777376,
+  "input_train_id": 777268,
+  "resolved_directory": "https://alimonitor.cern.ch/train-workdir/tests/0077/00777268/",
+  "downloaded_files": [
+    "AnalysisResults.root",
+    "configuration.json",
+    "dpl-config.json",
+    "full_config.json",
+    "OutputDirector.json",
+    "status.json",
+    "stdout.log",
+    "stderr.log"
+  ]
+}
