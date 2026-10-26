@@ -35,10 +35,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Push cuts.md content to gist
+      - name: Push cuts.md content to gist, pruning any other files
         env:
           GH_TOKEN: ${{ secrets.GIST_TOKEN }}
           GIST_ID: ${{ matrix.gist_id }}
         run: |
-          gh api -X PATCH "gists/${GIST_ID}" \
-            -f "files[cuts.md][content]=$(cat ${{ matrix.path }})"
+          set -euo pipefail
+          existing=$(gh api "gists/${GIST_ID}" --jq '.files | keys')
+          jq -n \
+            --argjson existing "$existing" \
+            --rawfile content "${{ matrix.path }}" \
+            '{
+              files: (
+                (reduce ($existing[] | select(. != "cuts.md")) as $f ({}; . + {($f): null}))
+                + {"cuts.md": {content: $content}}
+              )
+            }' > payload.json
+          gh api -X PATCH "gists/${GIST_ID}" --input payload.json
