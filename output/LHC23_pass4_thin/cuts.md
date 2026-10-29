@@ -1,8 +1,10 @@
-# CF_LHC23_pass4_thin_Femto_GP
+# CF_LHC23_pass4_thin_Femto_GP_lite
 
-**AnalysisResults.root for cutculator.py:** _pending -- added once the production train completes_
+> Dataset with binned kinematics
 
-**Hyperloop dataset:** _pending -- added once the derived data has been produced_
+**AnalysisResults.root for cutculator.py:** [https://alimonitor.cern.ch/catalogue/?path=/alice/cern.ch/user/a/alihyperloop/jobs/0636/hy_6366525/AOD#/alice/cern.ch/user/a/alihyperloop/jobs/0636/hy_6366525/AOD](https://alimonitor.cern.ch/catalogue/?path=/alice/cern.ch/user/a/alihyperloop/jobs/0636/hy_6366525/AOD#/alice/cern.ch/user/a/alihyperloop/jobs/0636/hy_6366525/AOD)
+
+**Hyperloop dataset:** [https://alimonitor.cern.ch/hyperloop/view-dataset/3735](https://alimonitor.cern.ch/hyperloop/view-dataset/3735)
 
 | | |
 | --- | --- |
