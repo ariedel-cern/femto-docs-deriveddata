@@ -12,6 +12,8 @@ on:
       - output/LHC24_pass1_minBias_lite/cuts.md
       - output/LHC25_pass1_minBias_lite/cuts.md
       - output/LHC26_pass1_thin/cuts.md
+      - output/LHC26ai_pass1_skimmed/cuts.md
+      - output/LHC25ah_pass1_skimmed_medium/cuts.md
 
 jobs:
   sync-gist:
@@ -33,6 +35,10 @@ jobs:
             gist_id: 25d9f4c47df5dcf3c41e8049283ac6ae
           - path: output/LHC26_pass1_thin/cuts.md
             gist_id: c5060b35f7c4d21c5d256c542c1391b9
+          - path: output/LHC26ai_pass1_skimmed/cuts.md
+            gist_id: 79f9b6d64526454ab04e5ea6a11f9125
+          - path: output/LHC25ah_pass1_skimmed_medium/cuts.md
+            gist_id: 4ce9bcff5e819d0489feaed90946d6bc
     steps:
       - uses: actions/checkout@v4
 

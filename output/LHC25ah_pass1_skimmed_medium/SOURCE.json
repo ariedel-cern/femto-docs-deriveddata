@@ -1,0 +1,16 @@
+{
+  "config_file": "configs/LHC25ah_pass1_skimmed_medium.json",
+  "production_train_id": 806575,
+  "input_train_id": 806575,
+  "resolved_directory": "https://alimonitor.cern.ch/train-workdir/tests/0080/00806575/",
+  "downloaded_files": [
+    "AnalysisResults.root",
+    "configuration.json",
+    "dpl-config.json",
+    "full_config.json",
+    "OutputDirector.json",
+    "status.json",
+    "stdout.log",
+    "stderr.log"
+  ]
+}
